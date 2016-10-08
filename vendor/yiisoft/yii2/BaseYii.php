@@ -20,40 +20,50 @@ use yii\di\Container;
 defined('YII_BEGIN_TIME') or define('YII_BEGIN_TIME', microtime(true));
 /**
  * This constant defines the framework installation directory.
+ * 该常量定义了框架安装的目录。
  */
 defined('YII2_PATH') or define('YII2_PATH', __DIR__);
 /**
  * This constant defines whether the application should be in debug mode or not. Defaults to false.
+ * 该常量定义了应用是否处于调试模式。
  */
 defined('YII_DEBUG') or define('YII_DEBUG', false);
 /**
  * This constant defines in which environment the application is running. Defaults to 'prod', meaning production environment.
+ * 该常量定义了应用程序运行的环境。默认是prod，代表是生产环境。
  * You may define this constant in the bootstrap script. The value could be 'prod' (production), 'dev' (development), 'test', 'staging', etc.
+ * 你可以在引导脚本里定义这个常量，可以定义为prod(生产环境)，dev(开发环境)，test，staging等
  */
 defined('YII_ENV') or define('YII_ENV', 'prod');
 /**
  * Whether the the application is running in production environment
+ * 应用是否在生产环境下运行。
  */
 defined('YII_ENV_PROD') or define('YII_ENV_PROD', YII_ENV === 'prod');
 /**
  * Whether the the application is running in development environment
+ * 应用是否在开发环境下运行
  */
 defined('YII_ENV_DEV') or define('YII_ENV_DEV', YII_ENV === 'dev');
 /**
  * Whether the the application is running in testing environment
+ * 应用是否在测试环境下运行
  */
 defined('YII_ENV_TEST') or define('YII_ENV_TEST', YII_ENV === 'test');
 
 /**
  * This constant defines whether error handling should be enabled. Defaults to true.
+ * 该常量定义错误处理是否开启，默认开启
  */
 defined('YII_ENABLE_ERROR_HANDLER') or define('YII_ENABLE_ERROR_HANDLER', true);
 
 /**
  * BaseYii is the core helper class for the Yii framework.
+ * BaseYii是Yii框架的核心助手类
  *
  * Do not use BaseYii directly. Instead, use its child class [[\Yii]] which you can replace to
  * customize methods of BaseYii.
+ * 不要直接使用BaseYii类。可以使用它的子类Yii来代替，在子类里自定义一些方法替换原有的方法即可。
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
@@ -62,9 +72,11 @@ class BaseYii
 {
     /**
      * @var array class map used by the Yii autoloading mechanism.
+     * Yii框架自动加载机制需要使用的类列表
      * The array keys are the class names (without leading backslashes), and the array values
      * are the corresponding class file paths (or path aliases). This property mainly affects
      * how [[autoload()]] works.
+     * 数组的键是类名（开头没有反斜杠），数组的值相关类文件的路径（或者路径的别名）
      * @see autoload()
      */
     public static $classMap = [];
