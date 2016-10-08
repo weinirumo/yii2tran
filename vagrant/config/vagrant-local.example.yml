@@ -1,0 +1,31 @@
+# Your personal GitHub token
+# 您的GitHub令牌
+github_token: <your-personal-github-token>
+# Read more: https://github.com/blog/1509-personal-api-tokens
+# You can generate it here: https://github.com/settings/tokens
+# 阅读更多: https://github.com/blog/1509-personal-api-tokens
+# 您可以在这里生成: https://github.com/settings/tokens
+
+# Guest OS timezone
+# 客户端系统的时区
+timezone: Europe/London
+
+# Are we need check box updates for every 'vagrant up'?
+# 我们需要为每次'vagrant up'设置check box吗?
+box_check_update: false
+
+# Virtual machine name
+# 虚拟机名称
+machine_name: y2aa
+
+# Virtual machine IP
+# 虚拟机IP
+ip: 192.168.83.137
+
+# Virtual machine CPU cores number
+# 虚拟机CPU核心数
+cpus: 1
+
+# Virtual machine RAM
+# 虚拟机RAM
+memory: 512
