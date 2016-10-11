@@ -363,18 +363,24 @@ class BaseYii
 
     /**
      * Creates a new object using the given configuration.
+     * 采用给定的配置项创建对象
      *
      * You may view this method as an enhanced version of the `new` operator.
+     * 您可以把该方法看做是new操作的增强版本。
      * The method supports creating an object based on a class name, a configuration array or
      * an anonymous function.
+     * 该方法支持基于类名，配置数组，或者匿名行数创建对象。
      *
      * Below are some usage examples:
+     * 如下是一些有用的例子：
      *
      * ```php
      * // create an object using a class name
+     * // 使用类名创建对象。
      * $object = Yii::createObject('yii\db\Connection');
      *
      * // create an object using a configuration array
+     * // 使用配置数组创建对象
      * $object = Yii::createObject([
      *     'class' => 'yii\db\Connection',
      *     'dsn' => 'mysql:host=127.0.0.1;dbname=demo',
@@ -384,23 +390,32 @@ class BaseYii
      * ]);
      *
      * // create an object with two constructor parameters
+     * // 使用两个构造参数创建对象
      * $object = \Yii::createObject('MyClass', [$param1, $param2]);
      * ```
      *
      * Using [[\yii\di\Container|dependency injection container]], this method can also identify
      * dependent objects, instantiate them and inject them into the newly created object.
+     * 使用[[\yii\di\Container|dependency injection container]]，该方法也可以确定依赖对象,实例化它们,并将它们注入到新创建的对象。
      *
      * @param string|array|callable $type the object type. This can be specified in one of the following forms:
+     * 参数 对象类型，可以通过如下的方式指定：
      *
      * - a string: representing the class name of the object to be created
+     * - 字符串： 代表被创建对象的类名
      * - a configuration array: the array must contain a `class` element which is treated as the object class,
      *   and the rest of the name-value pairs will be used to initialize the corresponding object properties
+     * - 配置数组： 数组必须包含被当做对象的类元素，并且其他的键值对将会被初始化为对象的属性。
      * - a PHP callable: either an anonymous function or an array representing a class method (`[$class or $object, $method]`).
      *   The callable should return a new instance of the object being created.
+     * - php回调:匿名函数或者表示类方法的数组，回调应该返回被创建对象的新实例。
      *
      * @param array $params the constructor parameters
+     * 参数 数组 构造函数使用的参数
      * @return object the created object
+     * 返回值 对象 被创建的对象
      * @throws InvalidConfigException if the configuration is invalid.
+     * 当配置项不合法时，抛出不合法的配置项异常
      * @see \yii\di\Container
      */
     public static function createObject($type, array $params = [])
@@ -437,7 +452,9 @@ class BaseYii
 
     /**
      * Sets the logger object.
+     * 设置日志对象
      * @param Logger $logger the logger object.
+     * 参数 日志对象
      */
     public static function setLogger($logger)
     {
@@ -446,10 +463,14 @@ class BaseYii
 
     /**
      * Logs a trace message.
+     * 记录追踪信息。
      * Trace messages are logged mainly for development purpose to see
      * the execution work flow of some code.
+     * 主要是在开发环境下才记录追踪信息，为了查看一些代码的运行流程。
      * @param string $message the message to be logged.
+     * 参数 字符串 被记录的信息
      * @param string $category the category of the message.
+     * 参数 字符串 信息的分类
      */
     public static function trace($message, $category = 'application')
     {
@@ -460,10 +481,14 @@ class BaseYii
 
     /**
      * Logs an error message.
+     * 记录错误信息
      * An error message is typically logged when an unrecoverable error occurs
      * during the execution of an application.
+     * 通常存在应用程序发生不可恢复的错误时，才会记录错误信息
      * @param string $message the message to be logged.
+     * 参数 字符串 被记录的信息
      * @param string $category the category of the message.
+     * 参数 字符串 信息所属分类
      */
     public static function error($message, $category = 'application')
     {
@@ -472,10 +497,14 @@ class BaseYii
 
     /**
      * Logs a warning message.
+     * 记录警告信息
      * A warning message is typically logged when an error occurs while the execution
      * can still continue.
+     * 当程序还能继续运行的时候，记录警告信息
      * @param string $message the message to be logged.
+     * 参数 字符串 被记录的信息
      * @param string $category the category of the message.
+     * 参数 字符串 信息所属的分类
      */
     public static function warning($message, $category = 'application')
     {
@@ -484,10 +513,14 @@ class BaseYii
 
     /**
      * Logs an informative message.
+     * 记录一个有用的信息
      * An informative message is typically logged by an application to keep record of
      * something important (e.g. an administrator logs in).
+     * 通常情况下，为了记录应用程序产生的一些重要的信息（例如管理员登陆），才会记录有用信息
      * @param string $message the message to be logged.
+     * 参数 字符串 被记录的有用信息
      * @param string $category the category of the message.
+     * 参数 字符串 信息所属的分类
      */
     public static function info($message, $category = 'application')
     {
@@ -496,19 +529,26 @@ class BaseYii
 
     /**
      * Marks the beginning of a code block for profiling.
+     * 标记代码块分析开始的位置。
      * This has to be matched with a call to [[endProfile]] with the same category name.
+     * 必须和带有相同分类名的endProfile配对使用
      * The begin- and end- calls must also be properly nested. For example,
+     * 开始和结束的调用，必须合理嵌套。例如：
      *
      * ```php
      * \Yii::beginProfile('block1');
      * // some code to be profiled
+     * // 一些被分析的代码
      *     \Yii::beginProfile('block2');
      *     // some other code to be profiled
+     *     // 另外其他的分析代码
      *     \Yii::endProfile('block2');
      * \Yii::endProfile('block1');
      * ```
      * @param string $token token for the code block
+     * 参数 字符串 代码块的玲api
      * @param string $category the category of this log message
+     * 参数 字符串 该记录信息的分类
      * @see endProfile()
      */
     public static function beginProfile($token, $category = 'application')
@@ -518,9 +558,13 @@ class BaseYii
 
     /**
      * Marks the end of a code block for profiling.
+     * 标记被分析代码块的结束位置。
      * This has to be matched with a previous call to [[beginProfile]] with the same category name.
+     * 该方法必须和带有相同分类名的beginProfile方法配合使用
      * @param string $token token for the code block
+     * 参数 字符串 代码块的令牌
      * @param string $category the category of this log message
+     * 参数 字符串 该记录信息的分类
      * @see beginProfile()
      */
     public static function endProfile($token, $category = 'application')
@@ -530,7 +574,9 @@ class BaseYii
 
     /**
      * Returns an HTML hyperlink that can be displayed on your Web page showing "Powered by Yii Framework" information.
+     * 在你的网页上返回Powered by Yii Framework的超链接信息
      * @return string an HTML hyperlink that can be displayed on your Web page showing "Powered by Yii Framework" information
+     * 返回值 字符串 把Powered by Yii Framework信息显示在您网站上的超链接
      */
     public static function powered()
     {
@@ -542,13 +588,17 @@ class BaseYii
 
     /**
      * Translates a message to the specified language.
+     * 把信息翻译成指定的语言
      *
      * This is a shortcut method of [[\yii\i18n\I18N::translate()]].
+     * 该方法是[[\yii\i18n\I18N::translate()]]的一个快捷方式。
      *
      * The translation will be conducted according to the message category and the target language will be used.
+     * 翻译将根据信息类别和使用目标语言
      *
      * You can add parameters to a translation message that will be substituted with the corresponding value after
      * translation. The format for this is to use curly brackets around the parameter name as you can see in the following example:
+     * 您可以将参数添加到翻译消息,翻译后将采用相应的替换值。参数的格式是使用花括号包裹，请看下面的例子：
      *
      * ```php
      * $username = 'Alexander';
@@ -557,13 +607,19 @@ class BaseYii
      *
      * Further formatting of message parameters is supported using the [PHP intl extensions](http://www.php.net/manual/en/intro.intl.php)
      * message formatter. See [[\yii\i18n\I18N::translate()]] for more details.
+     * 通过[PHP intl extensions]支持更多的信息参数。详情请参考[[\yii\i18n\I18N::translate()]]。
      *
      * @param string $category the message category.
+     * 参数 字符串 信息分类
      * @param string $message the message to be translated.
+     * 参数 字符串 被翻译的信息
      * @param array $params the parameters that will be used to replace the corresponding placeholders in the message.
+     * 参数 数组 信息中相应的占位符要被使用的参数
      * @param string $language the language code (e.g. `en-US`, `en`). If this is null, the current
      * [[\yii\base\Application::language|application language]] will be used.
+     * 参数 字符串 语言代码，（例如`en-US`, `en`），如果为空，就会使用默认的[[\yii\base\Application::language|application language]]
      * @return string the translated message.
+     * 返回值 字符串 翻译过的信息
      */
     public static function t($category, $message, $params = [], $language = null)
     {
@@ -581,9 +637,13 @@ class BaseYii
 
     /**
      * Configures an object with the initial property values.
+     * 使用初始化属性配置对象
      * @param object $object the object to be configured
+     * 参数 对象 被配置的对象
      * @param array $properties the property initial values given in terms of name-value pairs.
+     * 参数 数组 属性初始值给定的名称-值对
      * @return object the object itself
+     * 返回值 对象本身
      */
     public static function configure($object, $properties)
     {
@@ -596,11 +656,17 @@ class BaseYii
 
     /**
      * Returns the public member variables of an object.
+     * 返回对象的公共成员变量。
      * This method is provided such that we can get the public member variables of an object.
+     * 通过该方法，我们可以获得一个对象的公共成员变量。
      * It is different from "get_object_vars()" because the latter will return private
      * and protected variables if it is called within the object itself.
+     * 它跟get_object_vars方法的不同之处在于，当对象自身调用get_object_vars方法时，会返回私有和受保护的成员变量
+     *
      * @param object $object the object to be handled
+     * 参数 对象 将要被处理的对象
      * @return array the public member variables of the object
+     * 返回值 数组 对象的公共成员变量
      */
     public static function getObjectVars($object)
     {
