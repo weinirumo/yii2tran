@@ -223,8 +223,11 @@ class Request extends \yii\base\Request
 
     /**
      * Returns the method of the current request (e.g. GET, POST, HEAD, PUT, PATCH, DELETE).
+     * 返回当前请求的方式（例如GET, POST, HEAD, PUT, PATCH, DELETE）
      * @return string request method, such as GET, POST, HEAD, PUT, PATCH, DELETE.
+     * 返回值 字符串 请求的方式，例如GET, POST, HEAD, PUT, PATCH, DELETE.
      * The value returned is turned into upper case.
+     * 该值会转化为大写字母
      */
     public function getMethod()
     {

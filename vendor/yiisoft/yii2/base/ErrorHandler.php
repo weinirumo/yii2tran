@@ -13,9 +13,12 @@ use yii\web\HttpException;
 
 /**
  * ErrorHandler handles uncaught PHP errors and exceptions.
+ * ErrorHandler处理未捕获的错误和异常。
  *
  * ErrorHandler is configured as an application component in [[\yii\base\Application]] by default.
+ * 默认情况下错误处理在[[\yii\base\Application]]中被配置为一个应用组件。
  * You can access that instance via `Yii::$app->errorHandler`.
+ * 你可以通过`Yii::$app->errorHandler`访问应用实例
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @author Alexander Makarov <sam@rmcreative.ru>
@@ -26,6 +29,7 @@ abstract class ErrorHandler extends Component
 {
     /**
      * @var boolean whether to discard any existing page output before error display. Defaults to true.
+     * 参数 boolean 在错误展示以前，是否取消页面的所有输出。默认是true
      */
     public $discardExistingOutput = true;
     /**
@@ -33,25 +37,31 @@ abstract class ErrorHandler extends Component
      * when an out-of-memory issue occurs, the error handler is able to handle the error with
      * the help of this reserved memory. If you set this value to be 0, no memory will be reserved.
      * Defaults to 256KB.
+     * 参数 整型 保留内存的大小。预先分配了一部分内存，所以当内存溢出问题产生的时候，错误处理可以使用保留内存去处理该问题。
+     * 如果你设置为0，就不会保留内存。默认是256KB
      */
     public $memoryReserveSize = 262144;
     /**
      * @var \Exception the exception that is being handled currently.
+     * 参数 当前被处理的异常
      */
     public $exception;
 
     /**
      * @var string Used to reserve memory for fatal error handler.
+     * 参数 字符串 为致命错误处理预留的内存
      */
     private $_memoryReserve;
     /**
      * @var \Exception from HHVM error that stores backtrace
+     * 参数 来自HHVM的错误保存错误追踪
      */
     private $_hhvmException;
 
 
     /**
      * Register this error handler
+     * 注册错误处理
      */
     public function register()
     {
@@ -70,6 +80,7 @@ abstract class ErrorHandler extends Component
 
     /**
      * Unregisters this error handler by restoring the PHP error and exception handlers.
+     * 恢复PHP错误和异常处理程序，并取消该错误处理
      */
     public function unregister()
     {
@@ -79,10 +90,13 @@ abstract class ErrorHandler extends Component
 
     /**
      * Handles uncaught PHP exceptions.
+     * 处理未捕获的PHP异常
      *
      * This method is implemented as a PHP exception handler.
+     * 该方法作为PHP异常处理的实现
      *
      * @param \Exception $exception the exception that is not caught
+     * 参数 未捕获的异常
      */
     public function handleException($exception)
     {
@@ -93,10 +107,13 @@ abstract class ErrorHandler extends Component
         $this->exception = $exception;
 
         // disable error capturing to avoid recursive errors while handling exceptions
+        // 禁用错误捕获，从而避免处理错误时产生递归错误
         $this->unregister();
 
         // set preventive HTTP status code to 500 in case error handling somehow fails and headers are sent
         // HTTP exceptions will override this value in renderException()
+        // 设置当前HTTP状态码为500，以防错误处理失败，请求头被发送。
+        // HTTP异常会在renderException()方法中修改该值
         if (PHP_SAPI !== 'cli') {
             http_response_code(500);
         }
@@ -116,6 +133,7 @@ abstract class ErrorHandler extends Component
             }
         } catch (\Exception $e) {
             // an other exception could be thrown while displaying the exception
+            // 展示异常的时候其他的异常会被抛出
             $msg = "An Error occurred while handling another error:\n";
             $msg .= (string) $e;
             $msg .= "\nPrevious exception:\n";
@@ -142,17 +160,26 @@ abstract class ErrorHandler extends Component
 
     /**
      * Handles HHVM execution errors such as warnings and notices.
+     * 处理HHVM执行的错误，例如警告和提示。
      *
      * This method is used as a HHVM error handler. It will store exception that will
      * be used in fatal error handler
+     * 该方法用作HHVM的错误处理。它会存储用于致命错误处理的异常。
      *
      * @param integer $code the level of the error raised.
+     * 参数 整型 错误的等级
      * @param string $message the error message.
+     * 参数 字符串 错误信息
      * @param string $file the filename that the error was raised in.
+     * 参数 字符串 错误发生的文件名
      * @param integer $line the line number the error was raised at.
+     * 参数 整型 错误发生的行数
      * @param mixed $context
+     * 参数 混合型 上下文
      * @param mixed $backtrace trace of error
+     * 参数 混合型 追踪错误
      * @return boolean whether the normal error handler continues.
+     * 返回值 boolean 正常错误处理是否继续
      *
      * @throws ErrorException
      * @since 2.0.6
@@ -174,8 +201,10 @@ abstract class ErrorHandler extends Component
 
     /**
      * Handles PHP execution errors such as warnings and notices.
+     * 处理PHP执行时产生的警告和提示错误
      *
      * This method is used as a PHP error handler. It will simply raise an [[ErrorException]].
+     * 该方法用作PHP的错误处理。todo
      *
      * @param integer $code the level of the error raised.
      * @param string $message the error message.
