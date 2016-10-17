@@ -204,13 +204,18 @@ abstract class ErrorHandler extends Component
      * 处理PHP执行时产生的警告和提示错误
      *
      * This method is used as a PHP error handler. It will simply raise an [[ErrorException]].
-     * 该方法用作PHP的错误处理。todo
+     * 该方法用作PHP的错误处理。它只是引发一个ErrorException
      *
      * @param integer $code the level of the error raised.
+     * 参数 整型 发送错误的级别
      * @param string $message the error message.
+     * 参数 字符串 错误信息
      * @param string $file the filename that the error was raised in.
+     * 参数 字符串 错误发生的文件
      * @param integer $line the line number the error was raised at.
+     * 参数 整型 错误发生的行数
      * @return boolean whether the normal error handler continues.
+     * 返回值 boolean 正常错误处理是否继续
      *
      * @throws ErrorException
      */
@@ -218,13 +223,16 @@ abstract class ErrorHandler extends Component
     {
         if (error_reporting() & $code) {
             // load ErrorException manually here because autoloading them will not work
+            // 在这里手动加载异常错误处理，因为自动加载时，无法生效
             // when error occurs while autoloading a class
+            // 发生错误时，自动加载一个类
             if (!class_exists('yii\\base\\ErrorException', false)) {
                 require_once(__DIR__ . '/ErrorException.php');
             }
             $exception = new ErrorException($message, $code, $code, $file, $line);
 
             // in case error appeared in __toString method we can't throw any exception
+            // 以防错误发生在__toString方法中，我们不能抛出任何异常
             $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
             array_shift($trace);
             foreach ($trace as $frame) {
@@ -244,13 +252,16 @@ abstract class ErrorHandler extends Component
 
     /**
      * Handles fatal PHP errors
+     * 处理php致命错误
      */
     public function handleFatalError()
     {
         unset($this->_memoryReserve);
 
         // load ErrorException manually here because autoloading them will not work
+        // 在这里手动加载异常错误处理，因为自动加载时，无法生效
         // when error occurs while autoloading a class
+        // 发生错误时，自动加载一个类
         if (!class_exists('yii\\base\\ErrorException', false)) {
             require_once(__DIR__ . '/ErrorException.php');
         }
@@ -273,6 +284,7 @@ abstract class ErrorHandler extends Component
             $this->renderException($exception);
 
             // need to explicitly flush logs because exit() next will terminate the app immediately
+            // 需要明确的刷新日志，因为使用exit函数以后，会立刻终止进程
             Yii::getLogger()->flush(true);
             if (defined('HHVM_VERSION')) {
                 flush();
@@ -283,14 +295,19 @@ abstract class ErrorHandler extends Component
 
     /**
      * Renders the exception.
+     * 渲染异常页面
      * @param \Exception $exception the exception to be rendered.
+     * 参数 将要被渲染的异常
      */
     abstract protected function renderException($exception);
 
     /**
      * Logs the given exception
+     * 记录发生的异常
      * @param \Exception $exception the exception to be logged
+     * 参数 被记录的异常
      * @since 2.0.3 this method is now public.
+     * 从2.0.3版本以后，该方法为共有
      */
     public function logException($exception)
     {
@@ -305,10 +322,12 @@ abstract class ErrorHandler extends Component
 
     /**
      * Removes all output echoed before calling this method.
+     * 调用此方法，删除之前所有的重复输出
      */
     public function clearOutput()
     {
         // the following manual level counting is to deal with zlib.output_compression set to On
+        // 以下手动计算级别计数处理取决于zlib.output_compression设置为on
         for ($level = ob_get_level(); $level > 0; --$level) {
             if (!@ob_end_clean()) {
                 ob_clean();
@@ -318,10 +337,12 @@ abstract class ErrorHandler extends Component
 
     /**
      * Converts an exception into a PHP error.
-     *
+     * 把异常转化为php错误
      * This method can be used to convert exceptions inside of methods like `__toString()`
      * to PHP errors because exceptions cannot be thrown inside of them.
+     * 该方法用于把类似__toString方法的异常转化为php错误，因为这些方法里边无法抛出异常
      * @param \Exception $exception the exception to convert to a PHP error.
+     * 参数 要转化为php错误的异常
      */
     public static function convertExceptionToError($exception)
     {
@@ -330,8 +351,11 @@ abstract class ErrorHandler extends Component
 
     /**
      * Converts an exception into a simple string.
+     * 把异常转化为字符串
      * @param \Exception $exception the exception being converted
+     * 参数 待转化的异常
      * @return string the string representation of the exception.
+     * 返回值 字符串 表示该异常的字符串
      */
     public static function convertExceptionToString($exception)
     {
