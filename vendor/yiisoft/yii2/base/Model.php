@@ -19,35 +19,52 @@ use yii\validators\Validator;
 
 /**
  * Model is the base class for data models.
+ * Model是数据模型的基类
  *
  * Model implements the following commonly used features:
+ * model实现了如下常用的特性：
  *
  * - attribute declaration: by default, every public class member is considered as
  *   a model attribute
+ * - 属性声明：默认情况下，每一个公共的类成员都被当做一个模型属性
  * - attribute labels: each attribute may be associated with a label for display purpose
+ * - 属性标签：可以为每一个属性关联一个显示标签
  * - massive attribute assignment
+ * - 批量属性赋值
  * - scenario-based validation
+ * - 基于场景的验证
  *
  * Model also raises the following events when performing data validation:
+ * 当数据验证时，模型会触发如下的事件：
  *
  * - [[EVENT_BEFORE_VALIDATE]]: an event raised at the beginning of [[validate()]]
+ * - [[EVENT_BEFORE_VALIDATE]]：在validate方法开始触发的事件
  * - [[EVENT_AFTER_VALIDATE]]: an event raised at the end of [[validate()]]
+ * - [[EVENT_AFTER_VALIDATE]]：在validate方法结束触发的事件
  *
  * You may directly use Model to store model data, or extend it with customization.
+ * 你可以直接使用模型存储模型数据，或者自定义扩展它
  *
  * @property \yii\validators\Validator[] $activeValidators The validators applicable to the current
  * [[scenario]]. This property is read-only.
+ * 属性 适用于当前场景的验证器。该属性只读
  * @property array $attributes Attribute values (name => value).
+ * 属性 数组 属性值
  * @property array $errors An array of errors for all attributes. Empty array is returned if no error. The
  * result is a two-dimensional array. See [[getErrors()]] for detailed description. This property is read-only.
+ * 属性 数组 所有属性的错误数组集。如果没有错误会返回空数组，结果是二位数组。参考getErrors方法获取更多信息。该属性只读
  * @property array $firstErrors The first errors. The array keys are the attribute names, and the array values
  * are the corresponding error messages. An empty array will be returned if there is no error. This property is
  * read-only.
+ * 属性 数组 第一个错误数组的键是属性名，数组的值是对应的错误信息。如果没有错误就会返回空数组。该属性只读
  * @property ArrayIterator $iterator An iterator for traversing the items in the list. This property is
  * read-only.
+ * 属性 遍历列表中项目的迭代器 该属性只读
  * @property string $scenario The scenario that this model is in. Defaults to [[SCENARIO_DEFAULT]].
+ * 属性 字符串 该模型处于的场景。默认是[[SCENARIO_DEFAULT]]
  * @property ArrayObject|\yii\validators\Validator[] $validators All the validators declared in the model.
  * This property is read-only.
+ * 属性 数组对象|\yii\validators\Validator 所有在模型中声明的验证器
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
@@ -58,11 +75,13 @@ class Model extends Component implements IteratorAggregate, ArrayAccess, Arrayab
 
     /**
      * The name of the default scenario.
+     * 默认场景的名称
      */
     const SCENARIO_DEFAULT = 'default';
     /**
      * @event ModelEvent an event raised at the beginning of [[validate()]]. You may set
      * [[ModelEvent::isValid]] to be false to stop the validation.
+     * validate方法执行以前的事件。你可以设置[[ModelEvent::isValid]]为false来取消验证
      */
     const EVENT_BEFORE_VALIDATE = 'beforeValidate';
     /**
