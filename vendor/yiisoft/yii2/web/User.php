@@ -15,31 +15,42 @@ use yii\rbac\CheckAccessInterface;
 
 /**
  * User is the class for the `user` application component that manages the user authentication status.
+ * User是用来管理用户认证状态的应用组件。
  *
  * You may use [[isGuest]] to determine whether the current user is a guest or not.
+ * 你可以使用isGuest来判断当前的用户是否为游客。
  * If the user is a guest, the [[identity]] property would return `null`. Otherwise, it would
  * be an instance of [[IdentityInterface]].
+ * 如果该用户是游客，属性identity就会返回null。否则就会返回IdentityInterface的实例。
  *
  * You may call various methods to change the user authentication status:
+ * 你可以调用多种方法来改变用户认证状态：
  *
  * - [[login()]]: sets the specified identity and remembers the authentication status in session and cookie;
+ * - [[login()]]: 设置指定的身份，并把认证状态写入到session和cookie之中；
  * - [[logout()]]: marks the user as a guest and clears the relevant information from session and cookie;
+ * - [[logout()]]: 把用户标记为游客，并清除相关的session和cookie信息；
  * - [[setIdentity()]]: changes the user identity without touching session or cookie
  *   (this is best used in stateless RESTful API implementation).
+ * - [[setIdentity()]]: 改变用户的身份，但并不创建session或者cookie（这个最好用于无状态的RESTful API）
  *
  * Note that User only maintains the user authentication status. It does NOT handle how to authenticate
  * a user. The logic of how to authenticate a user should be done in the class implementing [[IdentityInterface]].
+ * 请注意，User只是保存了用户的认证状态，并没有处理如何认证一个用户。认证用户的逻辑应该在实现了[[IdentityInterface]]接口的类中完成。
  * You are also required to set [[identityClass]] with the name of this class.
+ * 您必须把[[identityClass]]设置为该类的名字。
  *
  * User is configured as an application component in [[\yii\web\Application]] by default.
  * You can access that instance via `Yii::$app->user`.
+ * User默认通过[[\yii\web\Application]]应用组件进行配置。你可以通过`Yii::$app->user`访问该实例。
  *
  * You can modify its configuration by adding an array to your application config under `components`
  * as it is shown in the following example:
+ * 你可以参考如下的内容，通过在components应用配置中增加一个数组来改变它的配置：
  *
  * ```php
  * 'user' => [
- *     'identityClass' => 'app\models\User', // User must implement the IdentityInterface
+ *     'identityClass' => 'app\models\User', // User must implement the IdentityInterface  User类必须实现IdentityInterface
  *     'enableAutoLogin' => true,
  *     // 'loginUrl' => ['user/login'],
  *     // ...
@@ -48,11 +59,15 @@ use yii\rbac\CheckAccessInterface;
  *
  * @property string|integer $id The unique identifier for the user. If null, it means the user is a guest.
  * This property is read-only.
+ * 属性 字符串|整型 区分用户的唯一表示。如果为空，意味这当前用户是游客身份。 该属性只读
  * @property IdentityInterface|null $identity The identity object associated with the currently logged-in
  * user. `null` is returned if the user is not logged in (not authenticated).
+ * 属性 跟当前登陆用户相关联的认证对象。如果用户没有登陆（没有认证），那么就会返回null。
  * @property boolean $isGuest Whether the current user is a guest. This property is read-only.
+ * 属性 boolean 当前的用户是否为游客。该属性只读
  * @property string $returnUrl The URL that the user should be redirected to after login. Note that the type
  * of this property differs in getter and setter. See [[getReturnUrl()]] and [[setReturnUrl()]] for details.
+ * 属性 字符串 用户登陆以后重定向的链接。请注意，该属性的类型在调用getter和setter有所不同。详情请参考[[getReturnUrl()]] 和 [[setReturnUrl()]]。
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
@@ -66,34 +81,44 @@ class User extends Component
 
     /**
      * @var string the class name of the [[identity]] object.
+     * 变量 字符串 [[identity]]对象的类名。
      */
     public $identityClass;
     /**
      * @var boolean whether to enable cookie-based login. Defaults to `false`.
+     * 变量 boolean 是否允许基于cookie的登陆。默认是false
      * Note that this property will be ignored if [[enableSession]] is `false`.
+     * 请注意当[[enableSession]]为false的时候，该属性会被忽略
      */
     public $enableAutoLogin = false;
     /**
      * @var boolean whether to use session to persist authentication status across multiple requests.
+     * 变量 boolean 在多请求的情况下，是否采用session持久化认证状态
      * You set this property to be `false` if your application is stateless, which is often the case
      * for RESTful APIs.
+     * 你可以把该属性设置为false，如果你的应用是无状态的。经常用于RESTful APIs。
      */
     public $enableSession = true;
     /**
      * @var string|array the URL for login when [[loginRequired()]] is called.
+     * 变量 字符串|数组  当[[loginRequired()]]被调用时，登陆的URL。
      * If an array is given, [[UrlManager::createUrl()]] will be called to create the corresponding URL.
      * The first element of the array should be the route to the login action, and the rest of
      * the name-value pairs are GET parameters used to construct the login URL. For example,
+     * 如果是一个数组，将会调用[[UrlManager::createUrl()]]方法去生成相应的url。该数组的第一个元素应该是登陆动作的路由，剩余的键值对用来组成登陆url的
+     * get参数，例如
      *
      * ```php
      * ['site/login', 'ref' => 1]
      * ```
      *
      * If this property is `null`, a 403 HTTP exception will be raised when [[loginRequired()]] is called.
+     * 如果该属性为null，当调用[[loginRequired()]]时就会抛出HTTP403异常。
      */
     public $loginUrl = ['site/login'];
     /**
      * @var array the configuration of the identity cookie. This property is used only when [[enableAutoLogin]] is `true`.
+     * 变量 数组 认证cookie的配置项。该属性只能在[[enableAutoLogin]]为true的时候才会使用
      * @see Cookie
      */
     public $identityCookie = ['name' => '_identity', 'httpOnly' => true];
@@ -101,50 +126,65 @@ class User extends Component
      * @var integer the number of seconds in which the user will be logged out automatically if he
      * remains inactive. If this property is not set, the user will be logged out after
      * the current session expires (c.f. [[Session::timeout]]).
+     * 变量 整型  当用户停留多少秒没有操作之后会被自动退出系统。如果该属性没有设置，用户会在当前的session过期以后退出。
      * Note that this will not work if [[enableAutoLogin]] is `true`.
+     * 请注意，当[[enableAutoLogin]]为true的时候，该属性不会生效
      */
     public $authTimeout;
     /**
      * @var CheckAccessInterface The access checker to use for checking access.
+     * 变量 用来检测登陆的检测器。
      * If not set the application auth manager will be used.
+     * 如果没设置，默认使用认证管理应用
      * @since 2.0.9
      */
     public $accessChecker;
     /**
      * @var integer the number of seconds in which the user will be logged out automatically
      * regardless of activity.
+     * 变量 整型  用户在多少秒之后会被自动退出系统，不考虑用户是否处于活动状态。
      * Note that this will not work if [[enableAutoLogin]] is `true`.
+     * 请注意，如果[[enableAutoLogin]]为true的时候，该属性无效。
      */
     public $absoluteAuthTimeout;
     /**
      * @var boolean whether to automatically renew the identity cookie each time a page is requested.
+     * 变量 boolean 当页面被请求以后，是否自动刷新认证cookie
      * This property is effective only when [[enableAutoLogin]] is `true`.
+     * 该属性只有在[[enableAutoLogin]]为true的时候才生效。
      * When this is `false`, the identity cookie will expire after the specified duration since the user
      * is initially logged in. When this is `true`, the identity cookie will expire after the specified duration
      * since the user visits the site the last time.
+     * 当该属性为false时，认证的cookie会在用户初始登陆一段时间以后过期。当该属性为true的时，认证cookie会在用户最后一次访问网站一段事件以后过期。
      * @see enableAutoLogin
      */
     public $autoRenewCookie = true;
     /**
      * @var string the session variable name used to store the value of [[id]].
+     * 变量 字符串 用来保存[[id]]的session变量名。
      */
     public $idParam = '__id';
     /**
      * @var string the session variable name used to store the value of expiration timestamp of the authenticated state.
      * This is used when [[authTimeout]] is set.
+     * 变量 字符串 用来保存认证状态失效的时间戳的session变量名。当[[authTimeout]]设置的时候才会采用该属性。
      */
     public $authTimeoutParam = '__expire';
     /**
      * @var string the session variable name used to store the value of absolute expiration timestamp of the authenticated state.
+     * 变量 字符串 用来保存认证状态绝对失效时间戳的session变量名。
      * This is used when [[absoluteAuthTimeout]] is set.
+     * 当设置了[[absoluteAuthTimeout]]属性时，使用该属性。
      */
     public $absoluteAuthTimeoutParam = '__absoluteExpire';
     /**
      * @var string the session variable name used to store the value of [[returnUrl]].
+     * 变量 字符串 用来保存跳转url的session变量名
      */
     public $returnUrlParam = '__returnUrl';
     /**
      * @var array MIME types for which this component should redirect to the [[loginUrl]].
+     * 变量 数组  该组件跳转到登陆url的MIME类型
      * @since 2.0.8
      */
     public $acceptableRedirectTypes = ['text/html', 'application/xhtml+xml'];
@@ -154,6 +194,7 @@ class User extends Component
 
     /**
      * Initializes the application component.
+     * 初始化应用组件
      */
     public function init()
     {
@@ -171,12 +212,16 @@ class User extends Component
 
     /**
      * Returns the identity object associated with the currently logged-in user.
+     * 返回跟当前登录用户相关的认证对象。
      * When [[enableSession]] is true, this method may attempt to read the user's authentication data
      * stored in session and reconstruct the corresponding identity object, if it has not done so before.
+     * 当[[enableSession]]为true的时候，该方法会尝试读取保存在session里边的用户数据，并重新构建相应的认证对象，如果之前没有进行过类似操作
      * @param boolean $autoRenew whether to automatically renew authentication status if it has not been done so before.
      * This is only useful when [[enableSession]] is true.
+     * 参数 boolean 如果之前没有创建认证状态是否自动新建认证状态。
      * @return IdentityInterface|null the identity object associated with the currently logged-in user.
      * `null` is returned if the user is not logged in (not authenticated).
+     * 返回值 IdentityInterface或null 跟当前登陆用户相关的认证对象。如果用户而没有登陆（没有认证），就会返回null
      * @see login()
      * @see logout()
      */
@@ -196,13 +241,17 @@ class User extends Component
 
     /**
      * Sets the user identity object.
+     * 设置用户认证对象
      *
      * Note that this method does not deal with session or cookie. You should usually use [[switchIdentity()]]
      * to change the identity of the current user.
+     * 请注意，该方法不会处理session或cookie，你应该经常使用[[switchIdentity()]]去改变当前用户的认证。
      *
      * @param IdentityInterface|null $identity the identity object associated with the currently logged user.
      * If null, it means the current user will be a guest without any associated identity.
+     * 参数 IdentityInterface|null 跟当前登陆用户相关的认证对象。如果为null，意味这当前用户是没有任何认证的游客。
      * @throws InvalidValueException if `$identity` object does not implement [[IdentityInterface]].
+     * 当对象没有实现IdentityInterface接口时，抛出不合法的数据异常。
      */
     public function setIdentity($identity)
     {
@@ -218,29 +267,43 @@ class User extends Component
 
     /**
      * Logs in a user.
+     * 用户登陆
      *
      * After logging in a user, you may obtain the user's identity information from the [[identity]] property.
      * If [[enableSession]] is true, you may even get the identity information in the next requests without
      * calling this method again.
+     * 用户登陆以后，你可以从[[identity]]属性中获取用户的认证信息。如果[[enableSession]]为true的时候，你甚至可以不必再次调用该方法而在下次
+     * 请求中获取认证信息。
      *
      * The login status is maintained according to the `$duration` parameter:
+     * 登陆状态保存的事件根据`$duration`而定：
      *
      * - `$duration == 0`: the identity information will be stored in session and will be available
      *   via [[identity]] as long as the session remains active.
+     * - `$duration == 0`: 认证信息将会保存在session中，并且一直有效的，直到session失效为止
      * - `$duration > 0`: the identity information will be stored in session. If [[enableAutoLogin]] is true,
      *   it will also be stored in a cookie which will expire in `$duration` seconds. As long as
      *   the cookie remains valid or the session is active, you may obtain the user identity information
      *   via [[identity]].
+     * - `$duration > 0`:认证信息会被保存到session中。如果[[enableAutoLogin]]为true，还会被保存在`$duration`决定长度的cookie中。只要cookie
+     * 和session有效，你就可以通过[[identity]]获取用户信息。
      *
      * Note that if [[enableSession]] is false, the `$duration` parameter will be ignored as it is meaningless
      * in this case.
+     * 请注意，如果[[enableSession]]为false，`$duration`参数会被忽略，因为在此种情况下它没有意义。
      *
      * @param IdentityInterface $identity the user identity (which should already be authenticated)
+     * 参数 用户认证（应该已经被认证过了）
      * @param integer $duration number of seconds that the user can remain in logged-in status.
+     * 参数 整型  用户可以保持登陆状态的时间。
      * Defaults to 0, meaning login till the user closes the browser or the session is manually destroyed.
+     * 默认是0，意味着直到用户关闭浏览器或者session被手动销毁。
      * If greater than 0 and [[enableAutoLogin]] is true, cookie-based login will be supported.
+     * 如果大于0，并且[[enableAutoLogin]]为true，就会支持基于cookie的登陆
      * Note that if [[enableSession]] is false, this parameter will be ignored.
+     * 请注意，如果[[enableSession]]为false，该参数会被忽略
      * @return boolean whether the user is logged in
+     * 返回值 boolean 用户是否登陆过。
      */
     public function login(IdentityInterface $identity, $duration = 0)
     {
@@ -262,6 +325,7 @@ class User extends Component
 
     /**
      * Logs in a user by the given access token.
+     *
      * This method will first authenticate the user by calling [[IdentityInterface::findIdentityByAccessToken()]]
      * with the provided access token. If successful, it will call [[login()]] to log in the authenticated user.
      * If authentication fails or [[login()]] is unsuccessful, it will return null.
@@ -270,6 +334,7 @@ class User extends Component
      * For example, [[\yii\filters\auth\HttpBearerAuth]] will set this parameter to be `yii\filters\auth\HttpBearerAuth`.
      * @return IdentityInterface|null the identity associated with the given access token. Null is returned if
      * the access token is invalid or [[login()]] is unsuccessful.
+     * 返回值 跟给定的access token
      */
     public function loginByAccessToken($token, $type = null)
     {

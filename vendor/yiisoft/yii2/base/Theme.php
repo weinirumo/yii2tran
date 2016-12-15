@@ -12,15 +12,20 @@ use yii\helpers\FileHelper;
 
 /**
  * Theme represents an application theme.
+ * Theme代表了一个应用的主题。
  *
  * When [[View]] renders a view file, it will check the [[View::theme|active theme]]
  * to see if there is a themed version of the view file exists. If so, the themed version will be rendered instead.
+ * 当视图渲染一个视图文件时，它会先检测[[View::theme|active theme]]下的是否存在主题版本的视图文件。如果存在，将会使用视图版本去渲染。
  *
  * A theme is a directory consisting of view files which are meant to replace their non-themed counterparts.
+ * 主题是一个包含视图文件的目录，这些视图文件代替了对应没有主题的文件。
  *
  * Theme uses [[pathMap]] to achieve the view file replacement:
+ * 主题使用[[pathMap]]（路径映射）来达到视图文件的替换：
  *
  * 1. It first looks for a key in [[pathMap]] that is a substring of the given view file path;
+ * 1. 它首先查看
  * 2. If such a key exists, the corresponding value will be used to replace the corresponding part
  *    in the view file path;
  * 3. It will then check if the updated view file exists or not. If so, that file will be used

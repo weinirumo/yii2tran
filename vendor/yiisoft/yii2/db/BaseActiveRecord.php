@@ -20,21 +20,35 @@ use yii\helpers\ArrayHelper;
 /**
  * ActiveRecord is the base class for classes representing relational data in terms of objects.
  *
+ *
  * See [[\yii\db\ActiveRecord]] for a concrete implementation.
+ * 查看[[\yii\db\ActiveRecord]]里边的具体实现
  *
  * @property array $dirtyAttributes The changed attribute values (name-value pairs). This property is
  * read-only.
+ * 属性 数组 改变过的值（键值对），该属性只读
  * @property boolean $isNewRecord Whether the record is new and should be inserted when calling [[save()]].
+ * 属性 boolean 一个记录是否新增，是否在调用save方法的时候执行插入操作
  * @property array $oldAttributes The old attribute values (name-value pairs). Note that the type of this
  * property differs in getter and setter. See [[getOldAttributes()]] and [[setOldAttributes()]] for details.
+ * 属性 数组 原来的属性键值对。请注意，该属性的类型在getter和setter中不同。请参考[[getOldAttributes()]] 和 [[setOldAttributes()]]
+ * 两个方法获取更多信息
+ *
  * @property mixed $oldPrimaryKey The old primary key value. An array (column name => column value) is
  * returned if the primary key is composite. A string is returned otherwise (null will be returned if the key
  * value is null). This property is read-only.
+ * 属性 混合型 原来的主键值。如果原来的主键是复合之间，就会返回一个数组。返回一个字符串，如果key为null的话，就返回null。
+ * 该属性只读
+ *
  * @property mixed $primaryKey The primary key value. An array (column name => column value) is returned if
  * the primary key is composite. A string is returned otherwise (null will be returned if the key value is null).
  * This property is read-only.
+ * 属性 混合型 主键的值。如果是复合主键，就会返回一个数组。否则就返回一个字符串，当主键值为null的时候，就返回null
+ * 该属性只读
+ *
  * @property array $relatedRecords An array of related records indexed by relation names. This property is
  * read-only.
+ * 属性 数组 以关联关系名称为索引的关联记录的数组
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @author Carsten Brandt <mail@cebe.cc>
