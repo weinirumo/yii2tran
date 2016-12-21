@@ -325,16 +325,23 @@ class User extends Component
 
     /**
      * Logs in a user by the given access token.
+     * 通过给定的access token登陆用户
      *
      * This method will first authenticate the user by calling [[IdentityInterface::findIdentityByAccessToken()]]
      * with the provided access token. If successful, it will call [[login()]] to log in the authenticated user.
+     * 该方法首先使用给定的access token调用[[IdentityInterface::findIdentityByAccessToken()]]认证用户。如果成功，就会调用[[login()]]
+     * 登陆已经认证的用户。
+     *
      * If authentication fails or [[login()]] is unsuccessful, it will return null.
+     * 如果认证失败，或者[[login()]]不成功，将会返回null
      * @param string $token the access token
+     * 参数 字符串 access token
      * @param mixed $type the type of the token. The value of this parameter depends on the implementation.
      * For example, [[\yii\filters\auth\HttpBearerAuth]] will set this parameter to be `yii\filters\auth\HttpBearerAuth`.
+     * 参数 混合型 令牌的类型，该值取决于对接口的实现。例如[[\yii\filters\auth\HttpBearerAuth]]将会把该值设置为`yii\filters\auth\HttpBearerAuth`
      * @return IdentityInterface|null the identity associated with the given access token. Null is returned if
      * the access token is invalid or [[login()]] is unsuccessful.
-     * 返回值 跟给定的access token
+     * 返回值 跟给定的access token相关的认证。如果access token不合法或者登陆失败，就会返回null
      */
     public function loginByAccessToken($token, $type = null)
     {
@@ -350,9 +357,11 @@ class User extends Component
 
     /**
      * Logs in a user by cookie.
+     * 使用cookie进行用户登陆
      *
      * This method attempts to log in a user using the ID and authKey information
      * provided by the [[identityCookie|identity cookie]].
+     * 该方法尝试使用[[identityCookie|identity cookie]]提供的ID和认证信息登陆用户。
      */
     protected function loginByCookie()
     {
@@ -372,11 +381,16 @@ class User extends Component
 
     /**
      * Logs out the current user.
+     * 注销当前用户
      * This will remove authentication-related session data.
+     * 该方法会删除跟认证相关的session数据。
      * If `$destroySession` is true, all session data will be removed.
+     * 如果`$destroySession`为true，所有的session数据都会被删除。
      * @param boolean $destroySession whether to destroy the whole session. Defaults to true.
      * This parameter is ignored if [[enableSession]] is false.
+     * 参数 boolean 是否销毁所有的session。默认是true。当[[enableSession]]为false的时候，该参数会被忽略。
      * @return boolean whether the user is logged out
+     * 返回值 boolean 当前用户是否成功退出。
      */
     public function logout($destroySession = true)
     {
@@ -397,7 +411,9 @@ class User extends Component
 
     /**
      * Returns a value indicating whether the user is a guest (not authenticated).
+     * 返回一个代表用户是否为游客的值。
      * @return boolean whether the current user is a guest.
+     * 返回值 boolean 当前用户是否登陆
      * @see getIdentity()
      */
     public function getIsGuest()
@@ -407,7 +423,9 @@ class User extends Component
 
     /**
      * Returns a value that uniquely represents the user.
+     * 返回唯一代表用户的一个值。
      * @return string|integer the unique identifier for the user. If `null`, it means the user is a guest.
+     * 返回值 字符串| 整型 用户的唯一认证。如果为null，意味着当前用户没有登陆。
      * @see getIdentity()
      */
     public function getId()
@@ -419,14 +437,19 @@ class User extends Component
 
     /**
      * Returns the URL that the browser should be redirected to after successful login.
+     * 返回登陆成功以后浏览器页面跳转的URL。
      *
      * This method reads the return URL from the session. It is usually used by the login action which
      * may call this method to redirect the browser to where it goes after successful authentication.
+     * 该方法从session中读取跳转URL。它经常被登陆动作在登陆成功以后调用，来重定向浏览器。
      *
      * @param string|array $defaultUrl the default return URL in case it was not set previously.
+     * 参数 字符串|数组 默认的跳转URL，以防没有之前没有设置。
      * If this is null and the return URL was not set previously, [[Application::homeUrl]] will be redirected to.
      * Please refer to [[setReturnUrl()]] on accepted format of the URL.
+     * 如果为null，或者之前没有设置，将会跳转到[[Application::homeUrl]]。关于可接受的URL格式，请参考[[setReturnUrl()]]
      * @return string the URL that the user should be redirected to after login.
+     * 返回值 字符串 用户登陆成功以后被重定向的页面。
      * @see loginRequired()
      */
     public function getReturnUrl($defaultUrl = null)
@@ -445,10 +468,14 @@ class User extends Component
 
     /**
      * Remembers the URL in the session so that it can be retrieved back later by [[getReturnUrl()]].
+     * 在session中保存URL，以便稍后在[[getReturnUrl()]]方法中取回。
      * @param string|array $url the URL that the user should be redirected to after login.
+     * 参数 字符串|设置 用户登陆以后，应该被重定向到的页面。
      * If an array is given, [[UrlManager::createUrl()]] will be called to create the corresponding URL.
+     * 如果为数组，会调用[[UrlManager::createUrl()]]方法生成相应的URL。
      * The first element of the array should be the route, and the rest of
      * the name-value pairs are GET parameters used to construct the URL. For example,
+     * 数组的第一个元素应该是路由，其他的键值对是用来构建URL的GET参数。例如，
      *
      * ```php
      * ['admin/index', 'ref' => 1]
@@ -461,23 +488,33 @@ class User extends Component
 
     /**
      * Redirects the user browser to the login page.
+     * 在用户的浏览器展示登陆页面。
      *
      * Before the redirection, the current URL (if it's not an AJAX url) will be kept as [[returnUrl]] so that
      * the user browser may be redirected back to the current page after successful login.
+     * 重定向以前，当前的URL（非AJAX url）将会保存在[[returnUrl]]属性中，以便用户登陆成功以后可以重定向到用户登陆之前的页面。
      *
      * Make sure you set [[loginUrl]] so that the user browser can be redirected to the specified login URL after
      * calling this method.
+     * 确保你设置了[[loginUrl]]，调用此方法以后，用户的浏览器可以被重定向到指定的登陆URL。
      *
      * Note that when [[loginUrl]] is set, calling this method will NOT terminate the application execution.
+     * 请注意，当设置了[[loginUrl]]以后，调用该方法将不会结束应用的执行。
      *
      * @param boolean $checkAjax whether to check if the request is an AJAX request. When this is true and the request
      * is an AJAX request, the current URL (for AJAX request) will NOT be set as the return URL.
+     * 参数 boolean 是否需要验证当前的请求为ajax请求。该值为true并且请求为ajax时，当前的URL（AJAX 请求）将不会被设置为跳转URL。
      * @param boolean $checkAcceptHeader whether to check if the request accepts HTML responses. Defaults to `true`. When this is true and
      * the request does not accept HTML responses the current URL will not be SET as the return URL. Also instead of
      * redirecting the user an ForbiddenHttpException is thrown. This parameter is available since version 2.0.8.
+     * 参数 boolean 是否检测请求能否接收HTML相应。默认是true。当该值为true并且请求不接收HTML响应时，当前的URL不会被设置为返回URL。此外不仅不重定向用户，
+     * 还会抛出一个ForbiddenHttpException的异常。该参数在2.0.8版本以后可用。
+     *
      * @return Response the redirection response if [[loginUrl]] is set
+     * 返回值 如果[[loginUrl]]被设置了，就返回重定向相应。
      * @throws ForbiddenHttpException the "Access Denied" HTTP exception if [[loginUrl]] is not set or a redirect is
      * not applicable.
+     * 如果[[loginUrl]]没有设置或重定向不可用，就会抛出异常ForbiddenHttpException异常
      * @see checkAcceptHeader
      */
     public function loginRequired($checkAjax = true, $checkAcceptHeader = true)
@@ -502,14 +539,21 @@ class User extends Component
 
     /**
      * This method is called before logging in a user.
+     * 该方法会在用户登陆以前调用。
      * The default implementation will trigger the [[EVENT_BEFORE_LOGIN]] event.
+     * 默认的实现会触发[[EVENT_BEFORE_LOGIN]]事件。
      * If you override this method, make sure you call the parent implementation
      * so that the event is triggered.
+     * 如果你重写了此方法，为了触发事件，你需要调用父级的实现。
      * @param IdentityInterface $identity the user identity information
+     * 参数 用户认证信息
      * @param boolean $cookieBased whether the login is cookie-based
+     * 参数 boolean 登陆是否基于cookie
      * @param integer $duration number of seconds that the user can remain in logged-in status.
      * If 0, it means login till the user closes the browser or the session is manually destroyed.
+     * 参数 整型 用户可以保持登陆状态的秒数。如果为0，意味这登陆状态持续用户关闭浏览器或session被手动销毁。
      * @return boolean whether the user should continue to be logged in
+     * 返回值 boolean 用户是否需要保持登陆状态。
      */
     protected function beforeLogin($identity, $cookieBased, $duration)
     {
@@ -525,13 +569,20 @@ class User extends Component
 
     /**
      * This method is called after the user is successfully logged in.
+     * 该方法会在用户登陆成功之后调用。
      * The default implementation will trigger the [[EVENT_AFTER_LOGIN]] event.
+     * 默认的实现会触发[[EVENT_AFTER_LOGIN]]事件。
      * If you override this method, make sure you call the parent implementation
      * so that the event is triggered.
+     * 如果你重写了该方法，请确保你调用了父类的实现，以保证事件被触发。
      * @param IdentityInterface $identity the user identity information
+     * 参数 用户认证信息。
      * @param boolean $cookieBased whether the login is cookie-based
+     * 参数 boolean 是否基于cookie登陆用户。
      * @param integer $duration number of seconds that the user can remain in logged-in status.
+     * 参数 整型 用户可以保持登陆状态的秒数。
      * If 0, it means login till the user closes the browser or the session is manually destroyed.
+     * 如果为0，意味着登陆状态会持续到用户关闭浏览器或者session被手动的销毁。
      */
     protected function afterLogin($identity, $cookieBased, $duration)
     {
@@ -544,11 +595,16 @@ class User extends Component
 
     /**
      * This method is invoked when calling [[logout()]] to log out a user.
+     * 该方法会在注销用户以前调用。
      * The default implementation will trigger the [[EVENT_BEFORE_LOGOUT]] event.
+     * 默认的实现会触发[[EVENT_BEFORE_LOGOUT]]事件。
      * If you override this method, make sure you call the parent implementation
      * so that the event is triggered.
+     * 如果你重写了此方法，请调用父类的实现，以触发事件。
      * @param IdentityInterface $identity the user identity information
+     * 参数 用户认证的信息
      * @return boolean whether the user should continue to be logged out
+     * 返回值 boolean 用户是否继续退出。
      */
     protected function beforeLogout($identity)
     {
@@ -562,10 +618,14 @@ class User extends Component
 
     /**
      * This method is invoked right after a user is logged out via [[logout()]].
+     * 该方法会在用户通过[[logout()]]退出以后被调用。
      * The default implementation will trigger the [[EVENT_AFTER_LOGOUT]] event.
+     * 默认的实现会触发[[EVENT_AFTER_LOGOUT]]事件
      * If you override this method, make sure you call the parent implementation
      * so that the event is triggered.
+     * 如果你重写此方法，记得调用一下父级的实现，以触发事件。
      * @param IdentityInterface $identity the user identity information
+     * 参数 用户的认证信息。
      */
     protected function afterLogout($identity)
     {
@@ -576,8 +636,10 @@ class User extends Component
 
     /**
      * Renews the identity cookie.
+     * 更新认证的cookie
      * This method will set the expiration time of the identity cookie to be the current time
      * plus the originally specified cookie duration.
+     * 该方法会把认证cookie的过期时间设置为当前时间加上原来指定的cookie过期时间
      */
     protected function renewIdentityCookie()
     {
@@ -596,11 +658,15 @@ class User extends Component
 
     /**
      * Sends an identity cookie.
+     * 发送认证cookie
      * This method is used when [[enableAutoLogin]] is true.
+     * 当允许自动登陆的时候调用此方法。
      * It saves [[id]], [[IdentityInterface::getAuthKey()|auth key]], and the duration of cookie-based login
      * information in the cookie.
+     * 它把[[id]], [[IdentityInterface::getAuthKey()|auth key]]和基于cookie的登陆信息保存到cookie。
      * @param IdentityInterface $identity
      * @param integer $duration number of seconds that the user can remain in logged-in status.
+     * 参数 执行 用户可以保持登陆状态的秒数。
      * @see loginByCookie()
      */
     protected function sendIdentityCookie($identity, $duration)
@@ -617,9 +683,13 @@ class User extends Component
 
     /**
      * Determines if an identity cookie has a valid format and contains a valid auth key.
+     * 检测认证cookie是否包含合法的格式和包含合法的认证key。
      * This method is used when [[enableAutoLogin]] is true.
+     * 当开启自动登陆的时候调用此方法。
      * This method attempts to authenticate a user using the information in the identity cookie.
+     * 该方法尝试使用认证cookie里边的信息认证用户。
      * @return array|null Returns an array of 'identity' and 'duration' if valid, otherwise null.
+     * 返回值 数组|null  如果合法，返回认证信息和过期事件组成的数组。否则返回null。
      * @see loginByCookie()
      * @since 2.0.9
      */
@@ -651,7 +721,9 @@ class User extends Component
      
     /**
      * Removes the identity cookie.
+     * 删除认证信息cookie
      * This method is used when [[enableAutoLogin]] is true.
+     * 当开启自动登陆时调用此方法。
      * @since 2.0.9
      */
     protected function removeIdentityCookie()
@@ -661,17 +733,22 @@ class User extends Component
 
     /**
      * Switches to a new identity for the current user.
+     * 为当前的用户更换一个新的认证。
      *
      * When [[enableSession]] is true, this method may use session and/or cookie to store the user identity information,
      * according to the value of `$duration`. Please refer to [[login()]] for more details.
+     * 当[[enableSession]]为true的时候，该方法可能使用session或cookie来存储用户认证的信息。更多详情请参考[[login()]]
      *
      * This method is mainly called by [[login()]], [[logout()]] and [[loginByCookie()]]
      * when the current user needs to be associated with the corresponding identity information.
+     * 当当前用户需要跟相应的认证信息关联的时候，该方法主要被[[login()]], [[logout()]] 和 [[loginByCookie()]]调用。
      *
      * @param IdentityInterface|null $identity the identity information to be associated with the current user.
      * If null, it means switching the current user to be a guest.
+     * 参数 跟当前用户关联的认证信息。如果为null，意味着注销当前用户。
      * @param integer $duration number of seconds that the user can remain in logged-in status.
      * This parameter is used only when `$identity` is not null.
+     * 参数 整型 用户保持登陆状态的秒数。该参数只在`$identity`不为空的时候使用。
      */
     public function switchIdentity($identity, $duration = 0)
     {
@@ -682,6 +759,7 @@ class User extends Component
         }
 
         /* Ensure any existing identity cookies are removed. */
+        /* 请确保删除了任何存在的认证cookies */
         if ($this->enableAutoLogin) {
             $this->removeIdentityCookie();
         }
@@ -709,13 +787,17 @@ class User extends Component
 
     /**
      * Updates the authentication status using the information from session and cookie.
+     * 使用session或者cookie里边的信息更新认证状态。
      *
      * This method will try to determine the user identity using the [[idParam]] session variable.
+     * 该方法会使用[[idParam]]session变量尝试决定用户认证
      *
      * If [[authTimeout]] is set, this method will refresh the timer.
+     * 如果设置了认证时间限制，该方法会刷新计时器。
      *
      * If the user identity cannot be determined by session, this method will try to [[loginByCookie()|login by cookie]]
      * if [[enableAutoLogin]] is true.
+     * 如果无法从session里获取用户认证信息，该方法会在自动登陆开启的时候尝试[[loginByCookie()|login by cookie]]
      */
     protected function renewAuthStatus()
     {
@@ -753,20 +835,30 @@ class User extends Component
 
     /**
      * Checks if the user can perform the operation as specified by the given permission.
+     * 根据指定的权限检测用户是否可以执行当前操作
      *
      * Note that you must configure "authManager" application component in order to use this method.
      * Otherwise it will always return false.
+     * 请注意，要使用此方法，你必须配置authManager应用组件。否则会一直返回false。
      *
      * @param string $permissionName the name of the permission (e.g. "edit post") that needs access check.
+     * 参数  字符串 需要登陆检测的权限名称。
      * @param array $params name-value pairs that would be passed to the rules associated
      * with the roles and permissions assigned to the user.
+     * 参数 数组 将会传递给跟角色和分配给用户的权限的规则的键值对。
      * @param boolean $allowCaching whether to allow caching the result of access check.
+     * 参数 boolean 是否允许缓存登陆检测的结果。
      * When this parameter is true (default), if the access check of an operation was performed
      * before, its result will be directly returned when calling this method to check the same
      * operation. If this parameter is false, this method will always call
      * [[\yii\rbac\CheckAccessInterface::checkAccess()]] to obtain the up-to-date access result. Note that this
      * caching is effective only within the same request and only works when `$params = []`.
+     * 当默认情况下，该值为true，如果一个操作的登陆检测之前执行过，当调用该方法来检测同样的操作时，它的结果就会被直接返回。如果该参数为false，
+     * 该方法会一直调用[[\yii\rbac\CheckAccessInterface::checkAccess()]]去获取最新的访问结果。请注意，缓存只在详情请求和`$params = []`
+     * 为空的时候生效。
+     *
      * @return boolean whether the user can perform the operation as specified by the given permission.
+     * 返回值 boolean 根据给定的权限，判断该用户是否可以执行特定操作。
      */
     public function can($permissionName, $params = [], $allowCaching = true)
     {
@@ -786,9 +878,12 @@ class User extends Component
 
     /**
      * Checks if the `Accept` header contains a content type that allows redirection to the login page.
+     * 检测`Accept`头是否包含一个允许重定向到登陆页的content type(内容类型)
      * The login page is assumed to serve `text/html` or `application/xhtml+xml` by default. You can change acceptable
      * content types by modifying [[acceptableRedirectTypes]] property.
+     * 登陆页面默认假定为`text/html` 或者 `application/xhtml+xml`，你可以更改[[acceptableRedirectTypes]]属性来改变可接受的内容类型。
      * @return boolean whether this request may be redirected to the login page.
+     * 返回值 boolean 该请求是否可以被重定向到登陆页面。
      * @see acceptableRedirectTypes
      * @since 2.0.8
      */
@@ -810,9 +905,12 @@ class User extends Component
 
     /**
      * Returns auth manager associated with the user component.
+     * 返回跟用户组件相关的认证管理器。
      *
      * By default this is the `authManager` application component.
+     * 默认是认证管理应用组件。
      * You may override this method to return a different auth manager instance if needed.
+     * 如果需要你可以重写该方法返回一个不同的认证管理实例。
      * @return \yii\rbac\ManagerInterface
      * @since 2.0.6
      * @deprecated Deprecated since version 2.0.9, to be removed in 2.1. Use `getAccessChecker()` instead.
@@ -824,6 +922,7 @@ class User extends Component
 
     /**
      * Returns the access checker used for checking access.
+     * 返回登陆验证需要的登陆验证器。
      * @return CheckAccessInterface
      * @since 2.0.9
      */
