@@ -18,9 +18,9 @@ class ModelEvent extends Event
 {
     /**
      * @var boolean whether the model is in valid status. Defaults to true.
-     * 参数 boolean 该模型是否处理验证状态，默认是true
+     * 参数 boolean 该模型是否处于合法状态，默认是true
      * A model is in valid status if it passes validations or certain checks.
-     * 当传递验证规则或者指定检测是，模型就处于验证模式
+     * 当模型通过验证或某些检测以后，它就处于合法状态
      */
     public $isValid = true;
 }
