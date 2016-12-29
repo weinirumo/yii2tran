@@ -19,19 +19,24 @@ use yii\helpers\StringHelper;
  *
  * Active Record implements the [Active Record design pattern](http://en.wikipedia.org/wiki/Active_record).
  * 活动记录实现[活动记录设计模式]
+ *
  * The premise behind Active Record is that an individual [[ActiveRecord]] object is associated with a specific
  * row in a database table. The object's attributes are mapped to the columns of the corresponding table.
  * 活动记录的前提是一个独立的对象关联数据表中一个指定的行。对象的属性被映射成相关表的列。
+ *
  * Referencing an Active Record attribute is equivalent to accessing the corresponding table column for that record.
  * 引用一个活动记录的属性相当于访问相应表里边的记录对应的列
  *
  * As an example, say that the `Customer` ActiveRecord class is associated with the `customer` table.
  * 举例来说，Customer活动记录类跟customer表关联
+ *
  * This would mean that the class's `name` attribute is automatically mapped to the `name` column in `customer` table.
  * 这意味这类的name属性自动映射到customer表里边的name列
+ *
  * Thanks to Active Record, assuming the variable `$customer` is an object of type `Customer`, to get the value of
  * the `name` column for the table row, you can use the expression `$customer->name`.
  * 感谢活动记录，假设变量$customer是Customer的一个对象，要获取表里边name列的属性值，你可以使用$customer->name。
+ *
  * In this example, Active Record is providing an object-oriented interface for accessing data stored in the database.
  * But Active Record provides much more functionality than this.
  * 在这个例子中，活动记录提供了一个面向对象的接口来访问存储在数据库中的数据。但是活动记录提供的功能要远比例子丰富。
@@ -64,6 +69,7 @@ use yii\helpers\StringHelper;
  *
  * * Using the `new` operator to create a new, empty object
  * * 使用new操作符创建一个新的空类
+ *
  * * Using a method to fetch an existing record (or records) from the database
  * * 使用方法从数据库里边获取已经存在的记录
  *
@@ -89,6 +95,7 @@ use yii\helpers\StringHelper;
  *
  * @method ActiveQuery hasMany($class, array $link) see [[BaseActiveRecord::hasMany()]] for more info
  * 方法 参考[[BaseActiveRecord::hasMany()]]方法获取更多
+ *
  * @method ActiveQuery hasOne($class, array $link) see [[BaseActiveRecord::hasOne()]] for more info
  * 方法 参考[[BaseActiveRecord::hasOne()]]方法获取更多
  *
@@ -138,8 +145,10 @@ class ActiveRecord extends BaseActiveRecord
      *
      * @param boolean $skipIfSet whether existing value should be preserved.
      * 参数 boolean 是否保留已经存在的值
+     *
      * This will only set defaults for attributes that are `null`.
      * 只会设置属性为null的默认值
+     *
      * @return $this the model instance itself.
      * 返回值 模型实例自身
      */
@@ -156,10 +165,13 @@ class ActiveRecord extends BaseActiveRecord
     /**
      * Returns the database connection used by this AR class.
      * 返回活动记录类使用的数据库连接
+     *
      * By default, the "db" application component is used as the database connection.
      * 默认情况下，db应用组件用于数据库连接
+     *
      * You may override this method if you want to use a different database connection.
      * 如果你需要一个不同的数据库连接的时候，你可以重写此方法
+     *
      * @return Connection the database connection used by this AR class.
      * 返回值 被活动记录类使用的数据库连接
      */
@@ -188,8 +200,10 @@ class ActiveRecord extends BaseActiveRecord
      *
      * @param string $sql the SQL statement to be executed
      * 参数 字符串 将要执行的sql语句
+     *
      * @param array $params parameters to be bound to the SQL statement during execution.
      * 参数 数组 sql语句执行的时候绑定到该sql语句的参数
+     *
      * @return ActiveQuery the newly created [[ActiveQuery]] instance
      * 返回值 活动记录 新创建的活动查询实例
      */
@@ -204,14 +218,19 @@ class ActiveRecord extends BaseActiveRecord
     /**
      * Finds ActiveRecord instance(s) by the given condition.
      * 使用给定的条件查找活动记录实例。
+     *
      * This method is internally called by [[findOne()]] and [[findAll()]].
      * 该方法会被findOne和findAll方法在内部调用。
+     *
      * @param mixed $condition please refer to [[findOne()]] for the explanation of this parameter
      * 参数 混合型 关于该参数的解释，请参考findOne方法
+     *
      * @return ActiveQueryInterface the newly created [[ActiveQueryInterface|ActiveQuery]] instance.
      * 返回值 活动查询接口 新创建的活动查询接口（活动查询）实例
+     *
      * @throws InvalidConfigException if there is no primary key defined
      * 如果没有主键，抛出不合法的配置异常
+     *
      * @internal
      */
     protected static function findByCondition($condition)
@@ -239,6 +258,7 @@ class ActiveRecord extends BaseActiveRecord
     /**
      * Updates the whole table using the provided attribute values and conditions.
      * 使用提供的属性值和条件更新整个表。
+     *
      * For example, to change the status to be 1 for all customers whose status is 2:
      * 例如，要把状态为2的客户属性全部改为1
      *
@@ -248,11 +268,14 @@ class ActiveRecord extends BaseActiveRecord
      *
      * @param array $attributes attribute values (name-value pairs) to be saved into the table
      * 参数 数组 被保存到表中的属性值（键值对）
+     *
      * @param string|array $condition the conditions that will be put in the WHERE part of the UPDATE SQL.
      * Please refer to [[Query::where()]] on how to specify this parameter.
      * 参数 字符串|数组 将要放在更新语句where部分的条件
+     *
      * @param array $params the parameters (name => value) to be bound to the query.
      * 参数 数组 绑定到查询中的参数（键值对）
+     *
      * @return integer the number of rows updated
      * 返回值 整型 更新的行数
      */
@@ -267,6 +290,7 @@ class ActiveRecord extends BaseActiveRecord
     /**
      * Updates the whole table using the provided counter changes and conditions.
      * 使用给定的计数器改变和条件更新整张表
+     *
      * For example, to increment all customers' age by 1,
      * 例如，给所有的客户的年龄增加1，
      *
@@ -276,14 +300,19 @@ class ActiveRecord extends BaseActiveRecord
      *
      * @param array $counters the counters to be updated (attribute name => increment value).
      * 参数 数组 被更新的计数器（属性名=>增加值）
+     *
      * Use negative values if you want to decrement the counters.
      * 如果你想减少计数，可以使用负数
+     *
      * @param string|array $condition the conditions that will be put in the WHERE part of the UPDATE SQL.
      * 参数 字符串|数组 用于sql语句where部分的条件
+     *
      * Please refer to [[Query::where()]] on how to specify this parameter.
      * 关于如何设置该参数，请参考[[Query::where()]]方法
+     *
      * @param array $params the parameters (name => value) to be bound to the query.
      * 参数 数组 绑定到查询语句的参数（键值对）
+     *
      * Do not name the parameters as `:bp0`, `:bp1`, etc., because they are used internally by this method.
      * 不要把参数命名为`:bp0`, `:bp1`,等，因为它们会在该方法内部使用
      * @return integer the number of rows updated
@@ -304,6 +333,7 @@ class ActiveRecord extends BaseActiveRecord
     /**
      * Deletes rows in the table using the provided conditions.
      * 使用给定的条件删除数据表里边的行。
+     *
      * WARNING: If you do not specify any condition, this method will delete ALL rows in the table.
      * 警告：如果你不指定任何条件，该方法会删除表里边的所有数据
      *
@@ -316,10 +346,13 @@ class ActiveRecord extends BaseActiveRecord
      *
      * @param string|array $condition the conditions that will be put in the WHERE part of the DELETE SQL.
      * 参数 字符串|数组 将要放到删除语句where部分的条件。
+     *
      * Please refer to [[Query::where()]] on how to specify this parameter.
      * 关于如何指定该参数，请参考[[Query::where()]]方法
+     *
      * @param array $params the parameters (name => value) to be bound to the query.
      * 参数 数组 绑定到查询的参数键值对
+     *
      * @return integer the number of rows deleted
      * 返回值 整型 被删除的行数
      */
@@ -344,12 +377,14 @@ class ActiveRecord extends BaseActiveRecord
     /**
      * Declares the name of the database table associated with this AR class.
      * 声明跟活动记录类相关的数据表名称。
+     *
      * By default this method returns the class name as the table name by calling [[Inflector::camel2id()]]
      * with prefix [[Connection::tablePrefix]]. For example if [[Connection::tablePrefix]] is `tbl_`,
      * `Customer` becomes `tbl_customer`, and `OrderItem` becomes `tbl_order_item`. You may override this method
      * if the table is not named after this convention.
      * 默认该方法通过调用[[Inflector::camel2id()]]方法和前缀[[Connection::tablePrefix]]返回类名作为表名称。例如假设[[Connection::tablePrefix]]
      * 是tbl_，Customer变成tbl_customer,OrderItem变成tbl_order_item。当表名跟默认的不一致的时候，你也可以重写此方法。
+     *
      * @return string the table name
      * 返回值 字符串 表名
      */
@@ -361,8 +396,10 @@ class ActiveRecord extends BaseActiveRecord
     /**
      * Returns the schema information of the DB table associated with this AR class.
      * 返回跟该活动记录类相关的数据表的概要信息
+     *
      * @return TableSchema the schema information of the DB table associated with this AR class.
      * 返回值 跟活动记录类相关的数据表概要信息
+     *
      * @throws InvalidConfigException if the table for the AR class does not exist.
      * 当跟活动记录相关的表不存在时，抛出不合法的配置异常
      */
@@ -382,6 +419,7 @@ class ActiveRecord extends BaseActiveRecord
     /**
      * Returns the primary key name(s) for this AR class.
      * 返回该活动记录类的主键名。
+     *
      * The default implementation will return the primary key(s) as declared
      * in the DB table that is associated with this AR class.
      * 默认会返回跟活动记录类相关的数据表中声明的主键。
@@ -405,8 +443,10 @@ class ActiveRecord extends BaseActiveRecord
     /**
      * Returns the list of all attribute names of the model.
      * 返回模型的所有属性名的列表
+     *
      * The default implementation will return all column names of the table associated with this AR class.
      * 默认会返回所有跟活动记录类相关的数据表的所有列名
+     *
      * @return array list of attribute names.
      * 返回值 数组 属性名列表
      */
@@ -418,10 +458,12 @@ class ActiveRecord extends BaseActiveRecord
     /**
      * Declares which DB operations should be performed within a transaction in different scenarios.
      * 声明在不同的场景下，哪种数据库操作应该采用事务处理。
+     *
      * The supported DB operations are: [[OP_INSERT]], [[OP_UPDATE]] and [[OP_DELETE]],
      * which correspond to the [[insert()]], [[update()]] and [[delete()]] methods, respectively.
      * 支持的数据库操作是：[[OP_INSERT]], [[OP_UPDATE]] 和 [[OP_DELETE]],分别对应[[insert()]], [[update()]] 和 [[delete()]]
      * 方法
+     *
      * By default, these methods are NOT enclosed in a DB transaction.
      * 这些方法默认没有加上数据库事务操作
      *
@@ -444,7 +486,7 @@ class ActiveRecord extends BaseActiveRecord
      * The above declaration specifies that in the "admin" scenario, the insert operation ([[insert()]])
      * should be done in a transaction; and in the "api" scenario, all the operations should be done
      * in a transaction.
-     * 上边的声明指定了在admin场景中，插入操作应该使用事务处理；在api场景中，所有的曹总都要使用事务完成。
+     * 上边的声明指定了在admin场景中，插入操作应该使用事务处理；在api场景中，所有的操作都要使用事务完成。
      *
      * @return array the declarations of transactional operations. The array keys are scenarios names,
      * and the array values are the corresponding transaction operations.
@@ -479,14 +521,18 @@ class ActiveRecord extends BaseActiveRecord
      * 1. call [[beforeValidate()]] when `$runValidation` is `true`. If [[beforeValidate()]]
      *    returns `false`, the rest of the steps will be skipped;
      * 1. 当$runValidation为true的时候，调用[[beforeValidate()]]方法。如果[[beforeValidate()]]返回false，后边的步骤将会被忽略
+     *
      * 2. call [[afterValidate()]] when `$runValidation` is `true`. If validation
      *    failed, the rest of the steps will be skipped;
      * 2. 当$runValidation为true时，调用[[afterValidate()]]方法。如果验证失败，后边的步骤将会被忽略
+     *
      * 3. call [[beforeSave()]]. If [[beforeSave()]] returns `false`,
      *    the rest of the steps will be skipped;
      * 3. 调用[[beforeSave()]]方法，如果[[beforeSave()]]方法返回false，后边的步骤会被忽略
+     *
      * 4. insert the record into database. If this fails, it will skip the rest of the steps;
      * 4. 把记录插入数据库。如果插入失败，剩余的步骤会被忽略
+     *
      * 5. call [[afterSave()]];
      * 5. 调用[[afterSave()]]方法；
      *
@@ -517,11 +563,14 @@ class ActiveRecord extends BaseActiveRecord
      * before saving the record. Defaults to `true`. If the validation fails, the record
      * will not be saved to the database and this method will return `false`.
      * 参数 boolean 保存记录前是否执行验证（调用验证方法）。默认是true，如果验证失败，记录就不会被保存到数据库，并且此方法会返回false
+     *
      * @param array $attributes list of attributes that need to be saved. Defaults to `null`,
      * meaning all attributes that are loaded from DB will be saved.
      * 参数 数组 需要保存的属性列表。默认是null，代表从数据库加载的所有属性都会被保存
+     *
      * @return boolean whether the attributes are valid and the record is inserted successfully.
      * 返回值 boolean 属性是否合法以及记录是否插入成功
+     *
      * @throws \Exception in case insert failed.
      * 以防插入失败，抛出异常。
      */
@@ -554,9 +603,11 @@ class ActiveRecord extends BaseActiveRecord
     /**
      * Inserts an ActiveRecord into DB without considering transaction.
      * 不考虑事务处理，把活动记录插入到数据库中
+     *
      * @param array $attributes list of attributes that need to be saved. Defaults to `null`,
      * meaning all attributes that are loaded from DB will be saved.
      * 参数 数组 需要保存的属性列表。默认是null，代表所有从数据库加载的所有属性都会被保存。
+     *
      * @return boolean whether the record is inserted successfully.
      * 返回值 boolean 记录是否被成功插入。
      */
@@ -592,14 +643,18 @@ class ActiveRecord extends BaseActiveRecord
      * 1. call [[beforeValidate()]] when `$runValidation` is `true`. If [[beforeValidate()]]
      *    returns `false`, the rest of the steps will be skipped;
      * 1. 如果$runValidation为true，调用[[beforeValidate()]]方法。如果[[beforeValidate()]]方法返回false，会跳过剩余的步骤
+     *
      * 2. call [[afterValidate()]] when `$runValidation` is `true`. If validation
      *    failed, the rest of the steps will be skipped;
      * 2. 如果$runValidation为true，调用[[afterValidate()]]方法。如果验证失败，就跳过剩余的步骤
+     *
      * 3. call [[beforeSave()]]. If [[beforeSave()]] returns `false`,
      *    the rest of the steps will be skipped;
      * 3. 调用[[beforeSave()]]方法，如果[[beforeSave()]]方法返回false，跳过剩余步骤
+     *
      * 4. save the record into database. If this fails, it will skip the rest of the steps;
      * 4. 把记录保存到数据库。如果操作失败，跳过剩余步骤；
+     *
      * 5. call [[afterSave()]];
      * 5. 调用[[afterSave()]]方法；
      *
@@ -624,8 +679,10 @@ class ActiveRecord extends BaseActiveRecord
      *
      * Note that it is possible the update does not affect any row in the table.
      * 请注意，更新操作可能没有影响数据表里边的任何一行。
+     *
      * In this case, this method will return 0. For this reason, you should use the following
      * 在这种情况下，该方法返回0。由于该原因，你应该使用如下的代码去检测更新操作是否执行成功：
+     *
      * code to check if update() is successful or not:
      *
      * ```php
@@ -654,6 +711,7 @@ class ActiveRecord extends BaseActiveRecord
      * @throws StaleObjectException if [[optimisticLock|optimistic locking]] is enabled and the data
      * being updated is outdated.
      * 当乐观锁开启，并且被更新的数据过期，抛出异常。
+     *
      * @throws \Exception in case update failed.
      * 更新失败，抛出异常
      */
@@ -693,8 +751,10 @@ class ActiveRecord extends BaseActiveRecord
      * 1. call [[beforeDelete()]]. If the method returns `false`, it will skip the
      *    rest of the steps;
      * 1. 调用[[beforeDelete()]]方法。如果该方法返回false，将会跳过剩余的步骤
+     *
      * 2. delete the record from the database;
      * 2. 删除数据库中的记录
+     *
      * 3. call [[afterDelete()]].
      * 3. 调用[[afterDelete()]]方法
      *
@@ -709,6 +769,7 @@ class ActiveRecord extends BaseActiveRecord
      * @throws StaleObjectException if [[optimisticLock|optimistic locking]] is enabled and the data
      * being deleted is outdated.
      * 抛出异常 当乐观锁开启并且被删除的数据过期。
+     *
      * @throws \Exception in case delete failed.
      * 抛出异常 当删除操作失败时
      */
@@ -736,9 +797,11 @@ class ActiveRecord extends BaseActiveRecord
     /**
      * Deletes an ActiveRecord without considering transaction.
      * 忽视事务，直接删除活动记录
+     *
      * @return integer|false the number of rows deleted, or `false` if the deletion is unsuccessful for some reason.
      * Note that it is possible the number of rows deleted is 0, even though the deletion execution is successful.
      * 返回值 整型|false 被删除的行数，删除失败返回false。请注意，就算删除操作执行成功，被删除的行数也有可能是0
+     *
      * @throws StaleObjectException
      * 抛出异常
      */
@@ -750,7 +813,7 @@ class ActiveRecord extends BaseActiveRecord
 
         // we do not check the return value of deleteAll() because it's possible
         // the record is already deleted in the database and thus the method will return 0
-        // 我们没有检测deleteAll方法的返回值，因为数据库中该记录已经被删除过了，因此该方法会返回0
+        // 我们没有检测deleteAll方法的返回值，有可能数据库中该记录已经被删除过了，那么该方法会返回0
         $condition = $this->getOldPrimaryKey(true);
         $lock = $this->optimisticLock();
         if ($lock !== null) {
@@ -768,13 +831,17 @@ class ActiveRecord extends BaseActiveRecord
 
     /**
      * Returns a value indicating whether the given active record is the same as the current one.
-     * 返回表示当前活动记录和给定的活动是否一致的值。
+     * 返回表示当前活动记录和给定的活动记录是否一致的值。
+     *
      * The comparison is made by comparing the table names and the primary key values of the two active records.
      * 对比是通过两个活动记录的表名和主键值进行的。
+     *
      * If one of the records [[isNewRecord|is new]] they are also considered not equal.
      * 如果一个活动记录[[isNewRecord|is new]]，也会被认为它们不相等。
+     *
      * @param ActiveRecord $record record to compare to
      * 参数 需对比的活动记录
+     *
      * @return boolean whether the two active records refer to the same row in the same database table.
      * 返回值 boolean 两个活动记录是否指向相同数据表的相同行
      */
@@ -790,8 +857,10 @@ class ActiveRecord extends BaseActiveRecord
     /**
      * Returns a value indicating whether the specified operation is transactional in the current [[scenario]].
      * 返回代表在当前场景下指定的操作是否是事务性处理的值。
+     *
      * @param integer $operation the operation to check. Possible values are [[OP_INSERT]], [[OP_UPDATE]] and [[OP_DELETE]].
      * 参数 整型 被检测的操作符，可能是[[OP_INSERT]], [[OP_UPDATE]] 或 [[OP_DELETE]]
+     *
      * @return boolean whether the specified operation is transactional in the current [[scenario]].
      * 返回值 boolean 当前场景下，指定的操作是否是事务性的。
      */
