@@ -17,6 +17,7 @@ use yii\web\HttpException;
  *
  * ErrorHandler is configured as an application component in [[\yii\base\Application]] by default.
  * 默认情况下错误处理在[[\yii\base\Application]]中被配置为一个应用组件。
+ *
  * You can access that instance via `Yii::$app->errorHandler`.
  * 你可以通过`Yii::$app->errorHandler`访问应用实例
  *
@@ -168,16 +169,22 @@ abstract class ErrorHandler extends Component
      *
      * @param integer $code the level of the error raised.
      * 参数 整型 错误的等级
+     *
      * @param string $message the error message.
      * 参数 字符串 错误信息
+     *
      * @param string $file the filename that the error was raised in.
      * 参数 字符串 错误发生的文件名
+     *
      * @param integer $line the line number the error was raised at.
      * 参数 整型 错误发生的行数
+     *
      * @param mixed $context
      * 参数 混合型 上下文
+     *
      * @param mixed $backtrace trace of error
      * 参数 混合型 追踪错误
+     *
      * @return boolean whether the normal error handler continues.
      * 返回值 boolean 正常错误处理是否继续
      *
@@ -208,12 +215,16 @@ abstract class ErrorHandler extends Component
      *
      * @param integer $code the level of the error raised.
      * 参数 整型 发送错误的级别
+     *
      * @param string $message the error message.
      * 参数 字符串 错误信息
+     *
      * @param string $file the filename that the error was raised in.
      * 参数 字符串 错误发生的文件
+     *
      * @param integer $line the line number the error was raised at.
      * 参数 整型 错误发生的行数
+     *
      * @return boolean whether the normal error handler continues.
      * 返回值 boolean 正常错误处理是否继续
      *
@@ -224,6 +235,7 @@ abstract class ErrorHandler extends Component
         if (error_reporting() & $code) {
             // load ErrorException manually here because autoloading them will not work
             // 在这里手动加载异常错误处理，因为自动加载时，无法生效
+
             // when error occurs while autoloading a class
             // 发生错误时，自动加载一个类
             if (!class_exists('yii\\base\\ErrorException', false)) {
@@ -260,6 +272,7 @@ abstract class ErrorHandler extends Component
 
         // load ErrorException manually here because autoloading them will not work
         // 在这里手动加载异常错误处理，因为自动加载时，无法生效
+
         // when error occurs while autoloading a class
         // 发生错误时，自动加载一个类
         if (!class_exists('yii\\base\\ErrorException', false)) {
@@ -296,6 +309,7 @@ abstract class ErrorHandler extends Component
     /**
      * Renders the exception.
      * 渲染异常页面
+     *
      * @param \Exception $exception the exception to be rendered.
      * 参数 将要被渲染的异常
      */
@@ -304,8 +318,10 @@ abstract class ErrorHandler extends Component
     /**
      * Logs the given exception
      * 记录发生的异常
+     *
      * @param \Exception $exception the exception to be logged
      * 参数 被记录的异常
+     *
      * @since 2.0.3 this method is now public.
      * 从2.0.3版本以后，该方法为共有
      */
@@ -338,9 +354,11 @@ abstract class ErrorHandler extends Component
     /**
      * Converts an exception into a PHP error.
      * 把异常转化为php错误
+     *
      * This method can be used to convert exceptions inside of methods like `__toString()`
      * to PHP errors because exceptions cannot be thrown inside of them.
      * 该方法用于把类似__toString方法的异常转化为php错误，因为这些方法里边无法抛出异常
+     *
      * @param \Exception $exception the exception to convert to a PHP error.
      * 参数 要转化为php错误的异常
      */
@@ -352,8 +370,10 @@ abstract class ErrorHandler extends Component
     /**
      * Converts an exception into a simple string.
      * 把异常转化为字符串
+     *
      * @param \Exception $exception the exception being converted
      * 参数 待转化的异常
+     *
      * @return string the string representation of the exception.
      * 返回值 字符串 表示该异常的字符串
      */

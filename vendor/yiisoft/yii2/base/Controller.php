@@ -16,14 +16,18 @@ use Yii;
  * @property Module[] $modules All ancestor modules that this controller is located within. This property is
  * read-only.
  * 属性 Moudule 控制器位于的所有祖先模块 该属性只读
+ *
  * @property string $route The route (module ID, controller ID and action ID) of the current request. This
  * property is read-only.
  * 属性 字符串 $route 当前请求的路由（模块ID，控制器ID和动作ID），该属性只读
+ *
  * @property string $uniqueId The controller ID that is prefixed with the module ID (if any). This property is
  * read-only.
  * 属性 字符串 $uniqueId 带有以模块（如果存在）为前缀的控制器ID，该属性只读
+ *
  * @property View|\yii\web\View $view The view object that can be used to render views or view files.
- * 属性 可以用来渲染视图或师徒文件的view对象
+ * 属性 可以用来渲染视图或视图文件的view对象
+ *
  * @property string $viewPath The directory containing the view files for this controller.
  * 属性 字符串 当前控制器的视图文件夹
  *
@@ -35,6 +39,7 @@ class Controller extends Component implements ViewContextInterface
     /**
      * @event ActionEvent an event raised right before executing a controller action.
      * 执行控制器动作之前的事件
+     *
      * You may set [[ActionEvent::isValid]] to be false to cancel the action execution.
      * 你可以设置[[ActionEvent::isValid]]为false来取消动作的执行。
      */
@@ -341,6 +346,7 @@ class Controller extends Component implements ViewContextInterface
      *
      * @param Action $action the action to be executed.
      * 参数 即将执行的动作
+     *
      * @return boolean whether the action should continue to run.
      * 返回值 boolean 是否继续执行动作
      */
@@ -367,6 +373,7 @@ class Controller extends Component implements ViewContextInterface
      * {
      *     $result = parent::afterAction($action, $result);
      *     // your custom code here
+     *     // 您的自定义代码
      *     return $result;
      * }
      * ```
@@ -617,7 +624,7 @@ class Controller extends Component implements ViewContextInterface
 
     /**
      * Returns the directory containing view files for this controller.
-     * 返回当前控制亲的包含视图文件的目录
+     * 返回当前控制器的包含视图文件的目录
      *
      * The default implementation returns the directory named as controller [[id]] under the [[module]]'s
      * [[viewPath]] directory.

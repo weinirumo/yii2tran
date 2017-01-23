@@ -54,9 +54,11 @@ interface Arrayable
      *
      * - `email`: the field name is the same as the property name `email`;
      * - `email`: 字段名跟属性名一样也是`email`
+     *
      * - `firstName` and `lastName`: the field names are `firstName` and `lastName`, and their
      *   values are obtained from the `first_name` and `last_name` properties;
      * - `firstName` and `lastName`: 来自包含`firstName` 和 `lastName`的属性名
+     *
      * - `fullName`: the field name is `fullName`. Its value is obtained by concatenating `first_name`
      *   and `last_name`.
      * - fullName：字段名是fullName，字段值由`firstName` 和 `lastName` 拼接而成
@@ -107,8 +109,10 @@ interface Arrayable
      * Fields not specified in [[extraFields()]] will be ignored. If this parameter is empty, no extra fields
      * will be returned.
      * 参数 数组 额外需要返回的字段。没有在[[extraFields()]]方法中指定的字段会被忽略。如果此参数为空，就不会返回额外的字段
+     *
      * @param boolean $recursive whether to recursively return array representation of embedded objects.
-     * 参数 boolean 是否递归的内层嵌套对象
+     * 参数 boolean 是否递归地内层嵌套对象
+     *
      * @return array the array representation of the object
      * 返回值 数组 代表对象的数组
      */

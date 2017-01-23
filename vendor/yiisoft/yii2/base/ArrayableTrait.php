@@ -107,6 +107,7 @@ trait ArrayableTrait
      * @return array the list of expandable field names or field definitions. Please refer
      * to [[fields()]] on the format of the return value.
      * 返回值 数组 扩展的字段名或者字段定义。请参考[[fields()]]了解返回值的格式
+     *
      * @see toArray()
      * @see fields()
      */
@@ -130,11 +131,14 @@ trait ArrayableTrait
      *
      * @param array $fields the fields being requested. If empty, all fields as specified by [[fields()]] will be returned.
      * 参数 数组 被请求输出的数组，如果为空，[[fields()]]方法指定的字段会被使用
+     *
      * @param array $expand the additional fields being requested for exporting. Only fields declared in [[extraFields()]]
      * will be considered.
      * 参数 数组 额外需要输出的数组。只有[[extraFields()]]指定的字段会被采用
+     *
      * @param boolean $recursive whether to recursively return array representation of embedded objects.
      * 参数 boolean 是否递归的返回嵌套的对象
+     *
      * @return array the array representation of the object
      * 返回值 数组 代表对象的数组
      */
@@ -155,11 +159,14 @@ trait ArrayableTrait
     /**
      * Determines which fields can be returned by [[toArray()]].
      * 确定被[[toArray()]]输出的字段
+     *
      * This method will check the requested fields against those declared in [[fields()]] and [[extraFields()]]
      * to determine which fields can be returned.
      * 该方法会检测跟[[fields()]]和[[extraFields()]]有冲突的字段，进而决定返回哪些字段
+     *
      * @param array $fields the fields being requested for exporting
      * 参数 数组 将要导出的字段
+     *
      * @param array $expand the additional fields being requested for exporting
      * 参数 数组 额外需要导出的字段
      *

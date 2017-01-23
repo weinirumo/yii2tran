@@ -25,7 +25,7 @@ namespace yii\base;
  *
  * This interface is mainly used by [[\yii\di\Container]] so that it can pass object configuration as the
  * last parameter to the implementing class' constructor.
- * 该接口主要是[[\yii\di\Container]]使用，所以它可以传递最后一个参数作为对象配置给类的构造函数，
+ * 该接口主要是[[\yii\di\Container]]使用，所以它可以传递最后一个参数作为对象配置给类的构造函数。
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0.3

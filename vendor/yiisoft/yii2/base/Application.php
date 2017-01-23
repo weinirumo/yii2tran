@@ -133,10 +133,10 @@ abstract class Application extends Module
     /**
      * @var string the namespace that controller classes are located in.
      * 属性 字符串 控制器类的命名空间
+     *
      * This namespace will be used to load controller classes by prepending it to the controller class name.
      * The default namespace is `app\controllers`.
      * 该命名空间将会在加载控制器的时候伪装类名，默认的命名空间是app\controllers
-     *
      *
      * Please refer to the [guide about class autoloading](guide:concept-autoloading.md) for more details.
      * 要了解更多，请参考类的自动加载
@@ -168,7 +168,7 @@ abstract class Application extends Module
     /**
      * @var string the language that the application is written in. This mainly refers to
      * the language that the messages and view files are written in.
-     * 属性 字符串 应用采用何种语言开发，主要是指信息和师徒文件采用的语言
+     * 属性 字符串 应用采用何种语言开发，主要是指信息和视图文件采用的语言
      * @see language
      */
     public $sourceLanguage = 'en-US';
@@ -219,7 +219,7 @@ abstract class Application extends Module
      * The "bootstrap" class listed above will be instantiated during the application
      * [[bootstrap()|bootstrapping process]]. If the class implements [[BootstrapInterface]],
      * its [[BootstrapInterface::bootstrap()|bootstrap()]] method will be also be called.
-     * 上例中bootstrap类会在应用执行bootstrap的时候被安装。如果累实现了bootstrap接口，纳闷bootstrap方法也会被调用
+     * 上例中bootstrap类会在应用执行bootstrap的时候被安装。如果类实现了bootstrap接口，纳闷bootstrap方法也会被调用
      *
      * If not set explicitly in the application config, this property will be populated with the contents of
      * `@vendor/yiisoft/extensions.php`.
@@ -237,7 +237,7 @@ abstract class Application extends Module
      * - an application component ID as specified via [[components]].
      * - 通过component指定的应用组件id
      * - a module ID as specified via [[modules]].
-     * - 在模块中指定的模块id
+     * - 通过[[modules]]指定的模块id
      * - a class name.
      * - 一个类名
      * - a configuration array.
@@ -246,7 +246,7 @@ abstract class Application extends Module
      * During the bootstrapping process, each component will be instantiated. If the component class
      * implements [[BootstrapInterface]], its [[BootstrapInterface::bootstrap()|bootstrap()]] method
      * will be also be called.
-     * 在应用自举的时候，每一个组件都会被实例化。如果组件的类实现bootstrap接口，他的bootstrap方法也会被调用
+     * 在应用自检的时候，每一个组件都会被实例化。如果组件的类实现bootstrap接口，它的bootstrap方法也会被调用
      *
      */
     public $bootstrap = [];
@@ -268,7 +268,7 @@ abstract class Application extends Module
      * Constructor. 构造函数
      * @param array $config name-value pairs that will be used to initialize the object properties.
      * Note that the configuration must contain both [[id]] and [[basePath]].
-     * 参数 数组 实例化类属性时候用到的键值对
+     * 参数 数组 实例化类属性时候用到的键值对。请注意配置必须包含[[id]] 和 [[basePath]]
      *
      * @throws InvalidConfigException if either [[id]] or [[basePath]] configuration is missing.
      * 当id或者basepath配置丢失抛出异常
@@ -363,9 +363,11 @@ abstract class Application extends Module
 
     /**
      * Initializes extensions and executes bootstrap components.
-     * 初始化扩展，执行自举组件
+     * 初始化扩展，执行自检组件
+     *
      * This method is called by [[init()]] after the application has been fully configured.
      * 该方法会在init执行完全配置以后调用
+     *
      * If you override this method, make sure you also call the parent implementation.
      * 如果你重写了此方法，确保调用了父类的实现
      *
@@ -420,6 +422,7 @@ abstract class Application extends Module
     /**
      * Registers the errorHandler component as a PHP error handler.
      * 注册错误处理组件，用来处理php报错
+     *
      * @param array $config application config
      * 参数 数组 应用配置
      *
@@ -474,10 +477,12 @@ abstract class Application extends Module
     /**
      * Runs the application.
      * 运行该应用
+     *
      * This is the main entrance of an application.
      * 这个是一个应用的主要入口方法
+     *
      * @return integer the exit status (0 means normal, non-zero values mean abnormal)
-     * 返回值 退出时的状态 0表示正常，非零的数字表示不正常
+     * 返回值 整型 退出时的状态 0表示正常，非零的数字表示不正常
      *
      */
     public function run()
@@ -518,6 +523,7 @@ abstract class Application extends Module
      *
      * @param Request $request the request to be handled
      * 参数 请求 将要被处理的请求
+     *
      * @return Response the resulting response
      * 返回值 响应结果
      *
@@ -528,7 +534,8 @@ abstract class Application extends Module
 
     /**
      * Returns the directory that stores runtime files.
-     * 返回保存运行时产生的文件
+     * 返回保存运行时产生的目录
+     *
      * @return string the directory that stores runtime files.
      * 返回值 字符串 保存运行时产生的文件的目录名
      *
@@ -547,6 +554,7 @@ abstract class Application extends Module
     /**
      * Sets the directory that stores runtime files.
      * 设置runtime文件的位置
+     *
      * @param string $path the directory that stores runtime files.
      * 参数 保存运行文件的目录
      *
@@ -562,8 +570,10 @@ abstract class Application extends Module
     /**
      * Returns the directory that stores vendor files.
      * 返回yii和扩展的保存目录
+     *
      * @return string the directory that stores vendor files.
      * 返回值 保存yii和扩展的目录
+     *
      * Defaults to "vendor" directory under [[basePath]].
      * 默认值为basePath下的vendor目录
      */
@@ -579,6 +589,7 @@ abstract class Application extends Module
     /**
      * Sets the directory that stores vendor files.
      * 设置vendor的文件路径
+     *
      * @param string $path the directory that stores vendor files.
      * 参数 保存vendor的文件目录
      */
@@ -593,12 +604,14 @@ abstract class Application extends Module
     /**
      * Returns the time zone used by this application.
      * 返回当前应用的时区
+     *
      * This is a simple wrapper of PHP function date_default_timezone_get().
      * 只是简单的对PHP原生函数date_default_timezone_get进行了包装
      *
      * If time zone is not configured in php.ini or application config,
      * it will be set to UTC by default.
      * 如果php.ini没有配置时区，那么采用默认时区UTC
+     *
      * @return string the time zone used by this application.
      * 返回值 应用程序使用的时区
      * @see http://php.net/manual/en/function.date-default-timezone-get.php
@@ -611,12 +624,16 @@ abstract class Application extends Module
     /**
      * Sets the time zone used by this application.
      * 为当前应用设置时区
+     *
      * This is a simple wrapper of PHP function date_default_timezone_set().
      * 该方法只是简单包装了一下php函数date_default_timezone_set
+     *
      * Refer to the [php manual](http://www.php.net/manual/en/timezones.php) for available timezones.
      * 到上边那个url去查看可用的时区
+     *
      * @param string $value the time zone used by this application.
      * 参数 字符串 应用采用的时区
+     *
      * @see http://php.net/manual/en/function.date-default-timezone-set.php
      */
     public function setTimeZone($value)
@@ -627,6 +644,7 @@ abstract class Application extends Module
     /**
      * Returns the database connection component.
      * 返回数据库连接组件
+     *
      * @return \yii\db\Connection the database connection.
      * 返回值 数据库连接
      */
@@ -638,6 +656,7 @@ abstract class Application extends Module
     /**
      * Returns the log dispatcher component.
      * 返回日志调度组件
+     *
      * @return \yii\log\Dispatcher the log dispatcher application component.
      * 返回值 日子调度应用组件
      */
@@ -649,6 +668,7 @@ abstract class Application extends Module
     /**
      * Returns the error handler component.
      * 返回错误处理组件
+     *
      * @return \yii\web\ErrorHandler|\yii\console\ErrorHandler the error handler application component.
      * 返回值 错误处理组件
      */
@@ -660,6 +680,7 @@ abstract class Application extends Module
     /**
      * Returns the cache component.
      * 返回缓存组件
+     *
      * @return \yii\caching\Cache the cache application component. Null if the component is not enabled.
      * 返回值 缓存组件 如果没有开启返回null
      */
@@ -671,6 +692,7 @@ abstract class Application extends Module
     /**
      * Returns the formatter component.
      * 返回格式化组件
+     *
      * @return \yii\i18n\Formatter the formatter application component.
      * 返回值 格式化应用组件
      */
@@ -682,6 +704,7 @@ abstract class Application extends Module
     /**
      * Returns the request component.
      * 返回请求组件
+     *
      * @return \yii\web\Request|\yii\console\Request the request component.
      * 返回值 请求组件
      */
@@ -693,6 +716,7 @@ abstract class Application extends Module
     /**
      * Returns the response component.
      * 返回响应组件
+     *
      * @return \yii\web\Response|\yii\console\Response the response component.
      * 返回组 响应组件
      */
@@ -703,7 +727,8 @@ abstract class Application extends Module
 
     /**
      * Returns the view object.
-     * 返回view对象
+     * 返回视图对象
+     *
      * @return View|\yii\web\View the view application component that is used to render various view files.
      * 返回值 用于渲染视图页面的视图组件
      */
@@ -715,6 +740,7 @@ abstract class Application extends Module
     /**
      * Returns the URL manager for this application.
      * 返回url管理组件
+     *
      * @return \yii\web\UrlManager the URL manager for this application.
      * 返回值 url管理组件
      */
@@ -726,6 +752,7 @@ abstract class Application extends Module
     /**
      * Returns the internationalization (i18n) component
      * 返回国际化组件
+     *
      * @return \yii\i18n\I18N the internationalization application component.
      * 返回值 国际化组件
      */
@@ -737,6 +764,7 @@ abstract class Application extends Module
     /**
      * Returns the mailer component.
      * 返回邮件发送组件
+     *
      * @return \yii\mail\MailerInterface the mailer application component.
      * 返回 邮件发送组件
      */
@@ -748,6 +776,7 @@ abstract class Application extends Module
     /**
      * Returns the auth manager for this application.
      * 返回权限管理组件
+     *
      * @return \yii\rbac\ManagerInterface the auth manager application component.
      * Null is returned if auth manager is not configured.
      * 返回值 权限管理组件 当权限管理没有配置的时候会返回null
@@ -760,6 +789,7 @@ abstract class Application extends Module
     /**
      * Returns the asset manager.
      * 返回资源管理组件
+     *
      * @return \yii\web\AssetManager the asset manager application component.
      * 返回值 资源管理组件
      */
@@ -771,6 +801,7 @@ abstract class Application extends Module
     /**
      * Returns the security component.
      * 返回安全组件
+     *
      * @return \yii\base\Security the security application component.
      * 返回值 安全组件
      */
@@ -801,13 +832,17 @@ abstract class Application extends Module
     /**
      * Terminates the application.
      * 结束应用
+     *
      * This method replaces the `exit()` function by ensuring the application life cycle is completed
      * before terminating the application.
      * 该方法代替了exit函数，以确保终止应用之前完成应用的生命周期
+     *
      * @param integer $status the exit status (value 0 means normal exit while other values mean abnormal exit).
      * 参数 整数  应用退出的状态（0表示正常，其他值表示不正常）
+     *
      * @param Response $response the response to be sent. If not set, the default application [[response]] component will be used.
      * 参数 响应 将要发出去的响应。如果没有设置，将会默认的response组件
+     *
      * @throws ExitException if the application is in testing mode
      * 在测试模式下抛出异常
      */

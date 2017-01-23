@@ -29,12 +29,16 @@ class ExitException extends \Exception
     /**
      * Constructor.
      * 构造函数
+     *
      * @param integer $status the exit status code
      * 参数 整型 退出状态吗
+     *
      * @param string $message error message
      * 参数 字符串 错误信息
+     *
      * @param integer $code error code
      * 参数 整型 错误代码
+     *
      * @param \Exception $previous The previous exception used for the exception chaining.
      * 参数 用于异常链的上一个异常
      */

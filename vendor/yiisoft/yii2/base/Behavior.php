@@ -13,11 +13,11 @@ namespace yii\base;
  *
  * A behavior can be used to enhance the functionality of an existing component without modifying its code.
  * 使用行为，可以不用更改组件的代码就能增强他们的功能
+ *
  * In particular, it can "inject" its own methods and properties into the component
- * 特别是，它能把自己的方法和属性加入到组件，
  * and make them directly accessible via the component. It can also respond to the events triggered in the component
- * 并通过组件直接访问 。它也可以根据组件中的事件触发终止正常代码的执行
  * and thus intercept the normal code execution.
+ * 特别是，它能把自己的方法和属性加入到组件，并通过组件直接访问 。它也可以根据组件中的事件触发终止正常代码的执行
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
@@ -49,10 +49,13 @@ class Behavior extends Object
      *
      * - method in this behavior: `'handleClick'`, equivalent to `[$this, 'handleClick']`
      * - 行为中的方法：`'handleClick'`相当于`[$this, 'handleClick']`
+     *
      * - object method: `[$object, 'handleClick']`
      * - 对象方法： `[$object, 'handleClick']`
+     *
      * - static method: `['Page', 'handleClick']`
      * - 静态方法：`['Page', 'handleClick']`
+     *
      * - anonymous function: `function ($event) { ... }`
      * - 匿名函数 ： `function ($event) { ... }`
      *
@@ -77,6 +80,7 @@ class Behavior extends Object
     /**
      * Attaches the behavior object to the component.
      * 把行为对象添加到组件
+     *
      * The default implementation will set the [[owner]] property
      * and attach event handlers as declared in [[events]].
      * 默认会添加设置组件属性和事件处理方法（在events方法中声明的）
@@ -97,7 +101,8 @@ class Behavior extends Object
 
     /**
      * Detaches the behavior object from the component.
-     * 把组件中的行为对象删除
+     * 把组件中的行为对象分离
+     *
      * The default implementation will unset the [[owner]] property
      * and detach event handlers declared in [[events]].
      * 默认会删除组件属性和events中声明的事件处理方法

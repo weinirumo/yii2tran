@@ -27,6 +27,7 @@ class ActionFilter extends Behavior
      * @var array list of action IDs that this filter should apply to. If this property is not set,
      * then the filter applies to all actions, unless they are listed in [[except]].
      * 属性 数组 该过滤器需要用到的动作id集合，如果这个属性没有设置，那么过滤器适用于所有的动作，除非有明确的except指定，将其排除在外
+     *
      * If an action ID appears in both [[only]] and [[except]], this filter will NOT apply to it.
      * 如果一个动作id同时出现在了only配置和except配置中，那么该过滤器就会无法生效
      *
@@ -102,10 +103,13 @@ class ActionFilter extends Behavior
     /**
      * This method is invoked right before an action is to be executed (after all possible filters.)
      * 该方法会在所有可能的过滤器执行结束以后，动作执行以前被调用
+     *
      * You may override this method to do last-minute preparation for the action.
      * 你可以重写此方法，为动作执行前执行最后的准备
+     *
      * @param Action $action the action to be executed.
      * 参数 动作 将要执行的动作
+     *
      * @return boolean whether the action should continue to be executed.
      * 返回值 boolean 动作是否继续执行
      */
@@ -117,12 +121,16 @@ class ActionFilter extends Behavior
     /**
      * This method is invoked right after an action is executed.
      * 该方法会在一个动作执行结束以后调用
+     *
      * You may override this method to do some postprocessing for the action.
      * 你可以重写此方法，给动作完成一些后续处理工作
+     *
      * @param Action $action the action just executed.
      * 参数 动作 刚执行过的动作
+     *
      * @param mixed $result the action execution result
      * 参数 混合类型 动作执行的结果
+     *
      * @return mixed the processed action result.
      * 返回值 混合类型 处理过的动作结果
      */
@@ -156,10 +164,11 @@ class ActionFilter extends Behavior
 
     /**
      * Returns a value indicating whether the filter is active for the given action.
-     * 返回过滤器是否对给动作生效的值
+     * 返回表示过滤器是否对给动作生效的值
      *
      * @param Action $action the action being filtered
      * 参数 动作 将被过滤的动作
+     *
      * @return boolean whether the filter is active for the given action.
      * 返回值 boolean 过滤器是否对给定的动作生效
      */

@@ -24,8 +24,10 @@ class ErrorException extends \ErrorException
      *
      * PHP Zend runtime won't call the error handler on fatals, HHVM will, with an error code of 16777217
      * PHP的zend引擎运行时不会调用该错误处理，HHVM会调用，报错代码是16777217
+     *
      * We will handle fatal error a bit different on HHVM.
      * 在HHVM上处理致命错误会有少许不同
+     *
      * @see https://github.com/facebook/hhvm/blob/master/hphp/runtime/base/runtime-error.h#L62
      * @since 2.0.6
      */
@@ -85,6 +87,7 @@ class ErrorException extends \ErrorException
      *
      * @param array $error error got from error_get_last()
      * 参数 数组 error_get_last()得到的错误
+     *
      * @return boolean if error is one of fatal type
      * 返回值 boolean 错误书不是致命类型的
      */

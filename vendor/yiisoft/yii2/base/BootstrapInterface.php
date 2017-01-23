@@ -63,6 +63,7 @@ interface BootstrapInterface
     /**
      * Bootstrap method to be called during application bootstrap stage.
      * 应用程序引导阶段调用的引导方法
+     *
      * @param Application $app the application currently running
      * 参数 应用 当前正在运行的应用
      */

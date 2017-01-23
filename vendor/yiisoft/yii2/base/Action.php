@@ -19,11 +19,14 @@ use Yii;
  *
  * Derived classes must implement a method named `run()`. This method
  * 派生的类都必须实现run()方法。
+ *
  * will be invoked by the controller when the action is requested.
  * 当动作被请求的时候，这个方法会被控制器自动调用。
+ *
  * The `run()` method can have parameters which will be filled up
  * with user input values automatically according to their names.
  * run()方法可以带有参数，这些参数会根据名字自动填充
+ *
  * For example, if the `run()` method is declared as follows:
  * 例如，如果run()方法被声明如下：
  *
@@ -33,6 +36,7 @@ use Yii;
  *
  * And the parameters provided for the action are: `['id' => 1]`.
  * 并且给动作提供的参数是 ：`['id' => 1]`
+ *
  * Then the `run()` method will be invoked as `run(1)` automatically.
  * 那么run()方法会被自动当做run(1)调用
  *
@@ -63,8 +67,10 @@ class Action extends Component
      *
      * @param string $id the ID of this action
      * 参数 字符串 动作的id
+     *
      * @param Controller $controller the controller that owns this action
-     * 参数 控制器 拥有此动作的空气只
+     * 参数 控制器 拥有此动作的控制器
+     *
      * @param array $config name-value pairs that will be used to initialize the object properties
      * 参数 数组 初始化对象属性的时候用到的键值对
      */
@@ -94,8 +100,10 @@ class Action extends Component
      *
      * @param array $params the parameters to be bound to the action's run() method.
      * 参数 数组 会被绑定到动作的run方法里
+     *
      * @return mixed the result of the action
      * 返回值 混合类型 动作执行的结果
+     *
      * @throws InvalidConfigException if the action class does not have a run() method
      * 抛出 当动作没有run方法的时候抛出异常
      */
@@ -122,8 +130,10 @@ class Action extends Component
     /**
      * This method is called right before `run()` is executed.
      * 此方法在执行run()方法以前调用
+     *
      * You may override this method to do preparation work for the action run.
      * 您可以重写此方法，以此为run动作做一些准备工作
+     *
      * If the method returns false, it will cancel the action.
      * 如果此方法返回false，那么动作将会被取消
      *
@@ -138,6 +148,7 @@ class Action extends Component
     /**
      * This method is called right after `run()` is executed.
      * 此方法会在run()方法执行后调用
+     *
      * You may override this method to do post-processing work for the action run.
      * 您可以重写此方法，为run()方法做一些善后工作
      */

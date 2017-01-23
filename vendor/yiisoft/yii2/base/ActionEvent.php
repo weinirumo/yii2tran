@@ -44,7 +44,7 @@ class ActionEvent extends Event
      * @param Action $action the action associated with this action event.
      * 参数 动作 跟事件相关的动作
      * @param array $config name-value pairs that will be used to initialize the object properties
-     * 参数 数组 初始化对象属性的使用使用的键值对
+     * 参数 数组 初始化对象属性的使用的键值对
      */
     public function __construct($action, $config = [])
     {
