@@ -12,16 +12,26 @@ use Yii;
 
 /**
  * Security provides a set of methods to handle common security-related tasks.
+ * Security提供了一系列的方法来处理公共的安全相关的任务。
  *
  * In particular, Security supports the following features:
+ * 特别的，Security支持如下的特性：
  *
  * - Encryption/decryption: [[encryptByKey()]], [[decryptByKey()]], [[encryptByPassword()]] and [[decryptByPassword()]]
+ * - 加密/解密: [[encryptByKey()]], [[decryptByKey()]], [[encryptByPassword()]] 和 [[decryptByPassword()]]
+ *
  * - Key derivation using standard algorithms: [[pbkdf2()]] and [[hkdf()]]
+ * - 使用标准算法的密钥导出：[[pbkdf2()]] 和 [[hkdf()]]
+ *
  * - Data tampering prevention: [[hashData()]] and [[validateData()]]
+ * - 预防数据篡改：[[hashData()]] 和 [[validateData()]]
+ *
  * - Password validation: [[generatePasswordHash()]] and [[validatePassword()]]
+ * - 密码验证：[[generatePasswordHash()]] 和 [[validatePassword()]]
  *
  * > Note: this class requires 'OpenSSL' PHP extension for random key/string generation on Windows and
  * for encryption/decryption on all platforms. For the highest security level PHP version >= 5.5.0 is recommended.
+ * > 注意：该类需要开启OpenSSL PHP扩展，为windows平台生成随机的key/字符串，还有所有平台加密和解密。为了最高的安全级别，推荐php的版本大于等于5.5.0
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @author Tom Worster <fsb@thefsb.org>
@@ -32,10 +42,12 @@ class Security extends Component
 {
     /**
      * @var string The cipher to use for encryption and decryption.
+     * 属性 字符串 用来加密解密的密码。
      */
     public $cipher = 'AES-128-CBC';
     /**
      * @var array[] Look-up table of block sizes and key sizes for each supported OpenSSL cipher.
+     * 属性 数组 每个支持OpenSSL密码的块尺寸和键尺寸的查询表。
      *
      * In each element, the key is one of the ciphers supported by OpenSSL (@see openssl_get_cipher_methods()).
      * The value is an array of two integers, the first is the cipher's block size in bytes and the second is
