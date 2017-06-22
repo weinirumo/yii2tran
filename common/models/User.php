@@ -74,6 +74,7 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
      * Finds user by username
+     * 通过username查找用户
      *
      * @param string $username
      * @return static|null
@@ -85,8 +86,10 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
      * Finds user by password reset token
+     * 根据重置密码token查找用户
      *
      * @param string $token password reset token
+     * 参数 字符串 重置密码token
      * @return static|null
      */
     public static function findByPasswordResetToken($token)
@@ -103,8 +106,10 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
      * Finds out if password reset token is valid
+     * 检测重置密码token是否合法
      *
      * @param string $token password reset token
+     * 参数 字符串 重置密码token
      * @return boolean
      */
     public static function isPasswordResetTokenValid($token)
@@ -144,9 +149,13 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
      * Validates password
+     * 验证密码
      *
      * @param string $password password to validate
+     * 参数 字符串 需要验证的密码
+     *
      * @return boolean if password provided is valid for current user
+     * 返回值 boolean 用户提供的密码是否合法
      */
     public function validatePassword($password)
     {
@@ -155,6 +164,7 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
      * Generates password hash from password and sets it to the model
+     * 根据密码生成密码hash并把它赋值到当前模型
      *
      * @param string $password
      */
@@ -165,6 +175,7 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
      * Generates "remember me" authentication key
+     * 生成‘记住我’的认证key
      */
     public function generateAuthKey()
     {
@@ -173,6 +184,7 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
      * Generates new password reset token
+     * 生成新的充值密码token
      */
     public function generatePasswordResetToken()
     {
@@ -181,6 +193,7 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
      * Removes password reset token
+     * 删除充值密码token
      */
     public function removePasswordResetToken()
     {

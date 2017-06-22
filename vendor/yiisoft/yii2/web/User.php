@@ -1005,7 +1005,7 @@ class User extends Component
     /**
      * Returns the access checker used for checking access.
      * 返回登陆验证需要的登陆验证器。
-     * 
+     *
      * @return CheckAccessInterface
      * @since 2.0.9
      */
