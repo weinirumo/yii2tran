@@ -166,7 +166,7 @@ class Model extends Component implements IteratorAggregate, ArrayAccess, Arrayab
      * validator configuration options such as `max` in case of `string` validator. The value of the attribute currently being validated
      * can be accessed as `$this->$attribute`. Note the `$` before `attribute`; this is taking the value of the variable
      * `$attribute` and using it as the name of the property to access.
-     * 在上边的例子中`$attribute`是指当前被验证的属性，而`$params`包含验证器配置想的数组，例如string验证器的时候max。当前验证属性的值可以通过
+     * 在上边的例子中`$attribute`是指当前被验证的属性，而`$params`包含验证器配置项的数组，例如string验证器的时候max。当前验证属性的值可以通过
      * `$this->$attribute`来访问。请注意属性前边的$符；这样做可以获取`$attribute`变量的值并使用它作为属性名来访问。
      *
      * Yii also provides a set of [[Validator::builtInValidators|built-in validators]].
@@ -309,7 +309,7 @@ class Model extends Component implements IteratorAggregate, ArrayAccess, Arrayab
      * The purpose of the above naming schema is that for forms which contain multiple different models,
      * the attributes of each model are grouped in sub-arrays of the POST-data and it is easier to
      * differentiate between them.
-     * 上述命名的模式是为了包含多个不同的模型，每个模型的属性都分组存放在POST-data的子数组，并且抑郁区分它们。
+     * 上述命名的模式是为了包含多个不同的模型，每个模型的属性都分组存放在POST-data的子数组，并且易于区分它们。
      *
      * By default, this method returns the model class name (without the namespace part)
      * as the form name. You may override it when the model is used in different forms.
@@ -915,7 +915,7 @@ class Model extends Component implements IteratorAggregate, ArrayAccess, Arrayab
 
     /**
      * Sets the attribute values in a massive way.
-     * 使用大量的方式设置属性值。
+     * 使用批量的方式设置属性值。
      *
      * @param array $values attribute values (name => value) to be assigned to the model.
      * 参数 数组 被分配到模型的属性值(名称 => 值)
